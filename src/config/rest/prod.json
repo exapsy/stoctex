@@ -1,0 +1,13 @@
+{
+  "v1": {
+    "customers": "https://gphub.herokuapp.com/api/v1/customers",
+    "products":  "https://gphub.herokuapp.com/api/v1/products",
+    "couriers":  "https://gphub.herokuapp.com/api/v1/couriers",
+    "users":     "https://gphub.herokuapp.com/api/v1/users",
+    "auth":     {
+      "isLoggedIn": "https://gphub.herokuapp.com/api/v1/isLoggedIn",
+      "login":      "https://gphub.herokuapp.com/api/v1/login",
+      "logout":     "https://gphub.herokuapp.com/api/v1/logout"
+    }
+  }
+}

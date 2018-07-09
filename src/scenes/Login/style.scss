@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:100,200|Open+Sans:300');
+
+// LOGIN STYLE
+.login-body {
+  display: block !important;
+  position: absolute;
+  width: 100% !important;
+  height: 100% !important;
+  background-color: transparent;
+  background-image: -webkit-linear-gradient(300deg, #0080ff, silver 50%, #03899b) !important;
+  background-image: linear-gradient(150deg, #0080ff, silver 50%, #03899b) !important;
+}
+
+.container {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+  padding-right: 0px;
+  padding-left: 0px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.login-headers {
+  display: block;
+  text-align: center;
+}
+
+
+.heading-3 {
+  position: static;
+  left: -128px;
+  top: 0px;
+  bottom: 0px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: auto;
+  margin-left: 0px;
+  padding: 10px 5px;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgba(0, 0, 0, .14);
+  border-radius: 12px;
+  font-family: 'Montserrat', sans-serif;
+  color: #0080ff;
+  font-weight: 200;
+  text-align: center;
+  text-decoration: none;
+  text-transform: none;
+}
+
+.heading-4 {
+  margin-top: 0px;
+  margin-bottom: 10px !important;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  font-weight: 100;
+}
+
+
+.login-block {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  width: 50%;
+  margin-right: auto;
+  margin-bottom: 64px;
+  margin-left: auto;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: stretch;
+  -ms-flex-line-pack: stretch;
+  align-content: stretch;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 auto;
+  -ms-flex: 0 auto;
+  flex: 0 auto;
+  border-radius: 8px;
+  background-color: transparent;
+  background-image: -webkit-linear-gradient(270deg, hsla(0, 0%, 100%, .25) 31%, rgba(45, 97, 148, .02));
+  background-image: linear-gradient(180deg, hsla(0, 0%, 100%, .25) 31%, rgba(45, 97, 148, .02));
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 300;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.form-block {
+  width: 100%;
+  padding-right: 24px;
+  padding-left: 24px;
+}
+
+
+.form {
+  position: static;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding-top: 0px;
+  padding-left: 0px;
+  line-height: 20px;
+}
+
+
+.text-field {
+  font-size: 14px !important;
+  height: 50px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.text-field-2 {
+  height: 50px;
+  font-size: 14px !important;
+  border-radius: 6px;
+}
+
+
+
+.login-button {
+  width: 100%;
+  font-size: 14px !important;
+  padding: 12px 28px !important;
+  border-radius: 3px !important;
+  background-color: #0080ff !important;
+}
+
+
+
+.div-block {
+  width: 100%;
+  height: auto;
+}
+
+.paragraph-2 {
+  font-size: 14px;
+  margin-top: 12px !important;
+  margin-bottom: 0px;
+  padding-right: 24px;
+  color: hsla(0, 0%, 100%, .66);
+  text-align: right;
+  text-transform: none;
+}
