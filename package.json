@@ -65,10 +65,10 @@
   "scripts": {
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
     "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
-    "start": "cross-env NODE_ENV=production npm run build-semantic && node scripts/start.js",
+    "start": "npm run build-semantic && node scripts/start.js",
     "build": "npm run build-semantic && node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "heroku-postbuild": "NODE_ENV_PRODUCTION=true npm install && npm run build"
+    "heroku-postbuild": "npm install && npm run build"
   },
   "devDependencies": {
     "node-sass": "^4.9.0",

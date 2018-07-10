@@ -19,7 +19,12 @@ export default class SceneSelector extends Component {
     const loginReq = await axios.post(
       api.v1.auth.login,
       userData,
-      { withCredentials: true }
+      { withCredentials: true,
+        headers: {
+          "Access-Control-Allow-Origin":      '*',
+          "Access-Control-Allow-Credentials": true
+        }
+      }
     );
     this.setState({userData: loginReq.data, isLoggedIn: loginReq === false ? false : true});
     console.log(loginReq.data);
@@ -38,7 +43,12 @@ export default class SceneSelector extends Component {
     return new Promise((resolve, reject) => {
       axios.get(
         api.v1.auth.isLoggedIn,
-        { withCredentials: true }
+        { withCredentials: true,
+          headers: {
+            "Access-Control-Allow-Origin":      '*',
+            "Access-Control-Allow-Credentials": true
+          }
+        }
       ).then(value => {
         resolve(value.data);
       });
