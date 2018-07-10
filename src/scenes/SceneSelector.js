@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
-import cookies from 'react-cookies';
+import cookies              from 'react-cookies';
+import axios                from   'axios';
 
 // LOCAL IMPORTS
 import Login from './Login';
 import Main  from './Main';
+import api from '../config/rest';
 
 export default class SceneSelector extends Component {
   constructor(props) {
@@ -13,18 +15,34 @@ export default class SceneSelector extends Component {
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
 
-  handleLoginSubmit(userData) {
-    this.setState({userData: userData, isLoggedIn: cookies.load('connect.sid') ? true : false});
+  async handleLoginSubmit(userData) {
+    const loginReq = await axios.post(
+      api.v1.auth.login,
+      userData,
+      { withCredentials: true }
+    );
+    this.setState({userData: loginReq.data, isLoggedIn: loginReq === false ? false : true});
+    console.log(loginReq.data);
   }
   
   componentDidMount() {
-    this.setState({isLoggedIn: cookies.load('connect.sid') ? true : false})
+    this.isLoggedIn()
+      .then(value => {
+        this.setState({isLoggedIn: value})
+        console.log('isLoggedIn', value);
+      })
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if(!cookies.load('connect.sid') && prevState.isLoggedIn) {
-      this.setState({isLoggedIn: false})
-    }
+  isLoggedIn() {
+    
+    return new Promise((resolve, reject) => {
+      axios.get(
+        api.v1.auth.isLoggedIn,
+        { withCredentials: true }
+      ).then(value => {
+        resolve(value.data);
+      });
+    });
   }
 
   getScene() {

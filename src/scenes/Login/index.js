@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import axios                from 'axios';
 
 // LOCAL IMPORTS
-import api from '../../config/rest';
 import './style.scss';
 
 export default class Login extends Component {
@@ -14,24 +13,12 @@ export default class Login extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    axios.post(
-      api.v1.auth.login,
+    this.props.onSubmit(
       {
-        username: event.target.username.value,
+        username: event.target.username.value, 
         password: event.target.password.value
-      },
-      {
-        withCredentials: true,
-        headers: {
-          "Access-Control-Allow-Origin":      '*',
-          "Access-Control-Allow-Credentials": true
-        }
       }
-    )
-    .then(value => {
-      this.props.onSubmit(value.data);
-      console.log(value.data);
-    });
+    );
     
   }
   render() {
