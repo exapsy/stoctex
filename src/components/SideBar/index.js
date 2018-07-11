@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios                from 'axios';
-import cookies              from 'react-cookies';
+import map                  from 'lodash/map';
 
 // LOCAL IMPORTS
 import Search       from './Search';
@@ -11,7 +11,15 @@ import './style.scss'
 export default class SideBar extends Component {
   constructor(props) {
     super(props);
+    this.state = {displayName: 'Username'};
     this.handleLogout = this.handleLogout.bind(this);
+  }
+
+  componentDidMount() {
+    this.getUserDisplayName()
+      .then(value => {
+        this.setState({displayName: value});
+      });
   }
 
   handleLogout(event) {
@@ -27,12 +35,40 @@ export default class SideBar extends Component {
       }
     )
       .then(value=> {
-        cookies.remove('sessionID');
         window.location.reload();
       })
   }
 
+  getUserDisplayName() {
+    return new Promise((resolve, reject) => {
+      axios.get(api.v1.auth.profile, { withCredentials: true })
+        .then(value => {
+          if(!value.data) {
+            reject('Profile not existant');
+          }
+          const displayName = 
+            (
+              map(
+                value.data.displayName.split(' '),
+                (value, index) => {
+                  return (
+                    <span key={index}>
+                      {value}
+                      <br/>
+                    </span>
+                  )
+                })
+          );
+          resolve(displayName);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
+  }
+
   render() {
+    let displayName = this.getUserDisplayName();
     return (
       <div className="sidebar w-col w-col-2">
         <div className="logo">
@@ -41,8 +77,7 @@ export default class SideBar extends Component {
         <div className="profile">
           <img src={ProfileImage} className="profile-image"/>
           <h4 className="profile-heading">
-          Harvey<br/>
-          Specter
+            {this.state.displayName}
           </h4>
           <a href='#logout' onClick={this.handleLogout} className="link w-button">LOGOUT</a>
         </div>

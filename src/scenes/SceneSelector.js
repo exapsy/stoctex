@@ -25,9 +25,10 @@ export default class SceneSelector extends Component {
           "Access-Control-Allow-Credentials": true
         }
       }
-    );
-    this.setState({userData: loginReq.data, isLoggedIn: loginReq === false ? false : true});
-    console.log(loginReq.data);
+    ).then(value => {
+      this.setState({userData: value.data, isLoggedIn: value.data === false ? false : true});
+      console.log(value.data);  
+    });
   }
   
   componentDidMount() {
@@ -51,6 +52,9 @@ export default class SceneSelector extends Component {
         }
       ).then(value => {
         resolve(value.data);
+      })
+      .catch(err => {
+        reject(err);
       });
     });
   }

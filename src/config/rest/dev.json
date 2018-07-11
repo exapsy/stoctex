@@ -7,7 +7,8 @@
     "auth":     {
       "isLoggedIn": "http://localhost:8000/api/v1/isLoggedIn",
       "login":      "http://localhost:8000/api/v1/login",
-      "logout":     "http://localhost:8000/api/v1/logout"
+      "logout":     "http://localhost:8000/api/v1/logout",
+      "profile":     "http://localhost:8000/api/v1/profile"
     }
   }
 }
