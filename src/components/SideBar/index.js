@@ -41,7 +41,14 @@ export default class SideBar extends Component {
 
   getUserDisplayName() {
     return new Promise((resolve, reject) => {
-      axios.get(api.v1.auth.profile, { withCredentials: true })
+      axios.get(api.v1.auth.profile, 
+        {
+        withCredentials: true, 
+        headers: {
+          "Access-Control-Allow-Origin":      '*',
+          "Access-Control-Allow-Credentials": true
+        } 
+      })
         .then(value => {
           if(!value.data) {
             reject('Profile not existant');
