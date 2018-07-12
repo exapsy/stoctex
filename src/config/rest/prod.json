@@ -1,14 +1,14 @@
 {
   "v1": {
-    "customers": "http://gphub.herokuapp.com/api/v1/customers",
-    "products":  "http://gphub.herokuapp.com/api/v1/products",
-    "couriers":  "http://gphub.herokuapp.com/api/v1/couriers",
-    "users":     "http://gphub.herokuapp.com/api/v1/users",
+    "customers": "https://gphub.herokuapp.com/api/v1/customers",
+    "products":  "https://gphub.herokuapp.com/api/v1/products",
+    "couriers":  "https://gphub.herokuapp.com/api/v1/couriers",
+    "users":     "https://gphub.herokuapp.com/api/v1/users",
     "auth":     {
-      "isLoggedIn": "http://gphub.herokuapp.com/api/v1/isLoggedIn",
-      "login":      "http://gphub.herokuapp.com/api/v1/login",
-      "logout":     "http://gphub.herokuapp.com/api/v1/logout",
-      "profile":    "http://gphub.herokuapp.com/api/v1/profile"
+      "isLoggedIn": "https://gphub.herokuapp.com/api/v1/isLoggedIn",
+      "login":      "https://gphub.herokuapp.com/api/v1/login",
+      "logout":     "https://gphub.herokuapp.com/api/v1/logout",
+      "profile":    "https://gphub.herokuapp.com/api/v1/profile"
     }
   }
 }
