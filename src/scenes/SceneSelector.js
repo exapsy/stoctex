@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import cookies              from 'react-cookies';
 import axios                from   'axios';
 
 // LOCAL IMPORTS
@@ -16,7 +15,7 @@ export default class SceneSelector extends Component {
   }
 
   async handleLoginSubmit(userData) {
-    const loginReq = await axios.post(
+    await axios.post(
       api.v1.auth.login,
       userData,
       { withCredentials: true,
