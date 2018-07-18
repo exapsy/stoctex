@@ -20,8 +20,7 @@ export default class SceneSelector extends Component {
       userData,
       { withCredentials: true,
         headers: {
-          "Access-Control-Allow-Origin":      '*',
-          "Access-Control-Allow-Credentials": true
+          "Access-Control-Allow-Origin": 'https://localhost:8000',
         }
       }
     ).then(value => {
@@ -44,6 +43,7 @@ export default class SceneSelector extends Component {
       axios.get(
         api.v1.auth.isLoggedIn,
         { withCredentials: true,
+          
           headers: {
             "Access-Control-Allow-Origin":      '*',
             "Access-Control-Allow-Credentials": true
