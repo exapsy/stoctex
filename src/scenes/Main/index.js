@@ -1,12 +1,13 @@
+// APIS & LIBRARIES
 import React, { Component } from 'react';
 import axios                from 'axios';
 import find                 from 'lodash/find';
 import { Input }            from 'semantic-ui-react';
 
 // LOCAL IMPORTS
-import List    from '../../components/List';
-import SideBar from '../../components/SideBar';
-import rest    from '../../config/rest';
+import MainList  from './MainList';
+import SideBar        from '../../components/SideBar';
+import rest           from '../../config/rest';
 import './style.scss';
 
 export default class Main extends Component {
@@ -74,20 +75,26 @@ export default class Main extends Component {
     }
   }
 
+  addProducts(product) {
+    const { code1, 
+            code2, 
+            barcode,
+            name,
+            gs,
+            corfu,
+            cclit,
+            gp_k  } = product;
+    
+  }
+
   render() {
+    console.log('models', MainList.models);
     return (
       <div className='Main'>
         <div className='content'>
           <SideBar updateList={this.updateList}/>
           <div className='maincontent'>
-            <List 
-              headers={{code: 'Code', name: 'Name', retail: 'Retail', wholesale: 'Wholesale', amount: 'Amount'}} 
-              items={this.state.products}
-              totalColumns={12}
-              columnWidth={[2, 4, 2, 2, 2]}
-              cellRender={this.cellRender}
-            />
-            
+            <MainList model={MainList.models.PRODUCTS}/>
           </div>
         </div>
       </div>

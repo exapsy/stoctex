@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes            from 'prop-types';
-import _                    from 'lodash';
+import map                  from 'lodash/map';
 import { 
   Icon, 
   Label, 
@@ -15,11 +15,13 @@ import './style.scss';
 export default class List extends Component {
   constructor(props) {
     super(props);
-    const columnsWidth = this.props.columnWidth ? this.props.columnWidth : Array(this.props.headers.length).fill(1);
-    this.state = {columnWidth: columnsWidth};
+
+    if(!props) throw new Error(`No props were given to List`);
+    if(!this.props.headers) throw new Error(`No headers were given to the List`);
+    if(!this.props.cellRender) throw new Error(`No render function was given to the List`);
   }
-  getTitles() {    
-    return _.map(this.props.headers, (item, index) => {
+  getTitles() {
+    return map(this.props.headers, (item, index) => {
       return (
         <Table.HeaderCell key={item.toLowerCase()}>
           {item}
@@ -29,28 +31,42 @@ export default class List extends Component {
   }
 
   getItems() {
-    return _.map(this.props.items, (item, index) => {
-      let cells = []
-      const headersArray = Object.values(this.props.headers);
-      const objectKeys   = Object.keys(this.props.headers);
-      const fieldArray   = _.map(objectKeys, (key, index) => {
+    const { headers, cellRender } = this.props;
+
+    const columnsWidth = this.props.columnWidth 
+                            ? this.props.columnWidth 
+                            : Array(this.props.headers.length).fill(1);
+    const { items } = this.props;
+
+    return map(items, (item, index) => {
+      let cells = [];
+      const headersValues  = Object.values(headers);
+      const itemKeys = Object.keys(headers);
+
+      // Returns item's values by key
+      const fieldArray   = map(itemKeys, (key, index) => {
         return item[key] || 'N/A';
       });
-      
-      for(let cellIndex = 0; cellIndex < headersArray.length; cellIndex++) {
-        let itemObjectId = this.props.items[index]._id;
-        let itemField    = headersArray[cellIndex];
 
-        const cell = fieldArray[cellIndex];
-        if(!cell){
+      
+      // Loop through all the headers
+      for(let cellIndex = 0; cellIndex < headersValues.length; cellIndex++) {
+        let itemObjectId  = items[index]._id;
+        let fieldName = itemKeys[cellIndex];
+
+        const cellValue = fieldArray[cellIndex];
+        if(!cellValue){
           console.error(
-            `Key "${headersArray[cellIndex]}" on item was null or undefined
+            `Key "${headersValues[cellIndex]}" on item was null or undefined
             \n${JSON.stringify(item, '\n', 2)}`);
         }
         const cellId = uuid();
         cells.push(
-          <Table.Cell key={cellId} selectable={this.props.cellRender && cell ? true : false} width={this.state.columnWidth[index]}>
-            {this.props.cellRender && cell ? this.props.cellRender(cell, itemField, itemObjectId, cellId) : 'N/A'}
+          <Table.Cell key={cellId} selectable={this.props.cellRender && cellValue ? true : false} width={columnsWidth[index]}>
+            { cellRender && 
+              cellValue ? 
+              cellRender(cellValue, fieldName, itemObjectId, cellId) 
+                : 'N/A'}
           </Table.Cell>
         );
 
@@ -65,6 +81,12 @@ export default class List extends Component {
     )
   }
 
+  getAdder() {
+    if(!this.props.addItems) return null;
+
+
+
+  }
 
   render() {
     return (
@@ -72,13 +94,23 @@ export default class List extends Component {
         <Table celled sortable columnts={this.props.columns}>
           <Table.Header>
             <Table.Row>
-              {this.getTitles()} 
+              {this.getTitles()}
             </Table.Row>
           </Table.Header>
-
-          <Table.Body>
-            {this.getItems()}
-          </Table.Body>
+          {this.getAdder() ?
+            (
+              <Table.Body>
+                {this.getAdder()}
+                {this.getItems()}
+              </Table.Body>
+            )
+            :
+            (
+              <Table.Body>
+                {this.getItems()}
+              </Table.Body>
+            )
+          }
         </Table>
       </div>
     )
@@ -88,7 +120,10 @@ export default class List extends Component {
 List.propTypes = {
   headers:      PropTypes.object,
   items:        PropTypes.arrayOf(PropTypes.object),
-  cellRender:   PropTypes.func,
+  modifiable:   PropTypes.array,
+  functions:    PropTypes.array,
+  addItems:     PropTypes.func,
   totalColumns: PropTypes.number,
-  columnWidth:  PropTypes.arrayOf(PropTypes.number)
+  columnWidth:  PropTypes.arrayOf(PropTypes.number),
+  cellRender:   PropTypes.func
 };
