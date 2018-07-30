@@ -1,6 +1,5 @@
 // LIBRARY & APIS
 import React, { Component } from 'react';
-import axios                from 'axios';
 
 // LOCAL IMPORTS
 import './style.scss';

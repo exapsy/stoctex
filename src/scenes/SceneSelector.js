@@ -25,7 +25,6 @@ export default class SceneSelector extends Component {
       }
     ).then(value => {
       this.setState({userData: value.data, isLoggedIn: value.data === false ? false : true});
-      console.log(value.data);  
     });
   }
   
@@ -33,7 +32,6 @@ export default class SceneSelector extends Component {
     this.isLoggedIn()
       .then(value => {
         this.setState({isLoggedIn: value})
-        console.log('isLoggedIn', value);
       })
   }
 

@@ -75,14 +75,15 @@ export default class SideBar extends Component {
   }
 
   render() {
-    let displayName = this.getUserDisplayName();
+    // TODO: check wtf has happened here
+    // let displayName = this.getUserDisplayName();
     return (
       <div className="sidebar w-col w-col-2">
         <div className="logo">
           <h1 className="logo-heading">STOCTEX</h1>
         </div>
         <div className="profile">
-          <img src={ProfileImage} className="profile-image"/>
+          <img alt="profile" src={ProfileImage} className="profile-image"/>
           <h4 className="profile-heading">
             {this.state.displayName}
           </h4>

@@ -135,16 +135,26 @@
   padding: @cellVerticalPadding @cellHorizontalPadding;
   text-align: @cellTextAlign;
 }
-// Custom Selection
+// (Custom) Selection
 .ui.table .ui.input > input {
   font-family: 'Montserrat', sans-serif;
   border-width: 0px !important;
   background-color: transparent !important;
   transition: background-color 0.3s;
 }
-// Custom Selection
-.ui.table .ui.input > input:hover {
+// (Custom) Selection
+.ui.table .ui.input > input:focus:hover {
   background-color: #ffffffa0 !important;
+  transition: background-color 0.3s;
+}
+// (Custom) Selection
+.ui.table .ui.input > input:focus {
+  background-color: #ffffffa0 !important;
+  transition: background-color 0.3s;
+}
+// (Custom) Selection
+.ui.table .ui.input > input:hover {
+  background-color: #d2d2d8 !important;
   transition: background-color 0.3s;
 }
 

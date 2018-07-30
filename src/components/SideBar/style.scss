@@ -36,6 +36,25 @@
   font-weight: 300 !important;
   text-align: center;
   letter-spacing: 4px;
+
+  transition: font-size 0.5s;
+
+  @media screen and (max-width: 1200px) {
+    font-size: 2em;
+
+    transition: font-size 0.5s;
+  }
+
+  @media screen and (max-width: 1000px) {
+    font-size: 1.5em;
+
+    transition: font-size 0.5s;
+  }
+  @media screen and (max-width: 750px) {
+    font-size: 2em;
+
+    transition: font-size 0.5s;
+  }
 }
 
 .profile {
