@@ -124,53 +124,37 @@ export default class StoctexTable extends Component {
     }
   }
 
-  getButtonId(event) {
-    return new Promise((resolve, reject) => {
-      
-      const id = event.target.id;
-
-      if(!id) reject('No id available in Button');
-
-      resolve(event.target.id)
-    });
-  }
-
   @action.bound
   onItemRemove(event) {
     event.preventDefault();
     
-    this.getButtonId(event).then(objectId => {
-      if(!objectId) {
-        console.error('No ObjectId was given for the item');
-        return;
-      }
-  
-      console.log('ObjectID', objectId);
-  
-      // REMOVE ITEM
-      // _remove(this.items, {_id: objectId});
-  
-      // CALL EXTERNAL EVENT HANDLER IF EXISTS
-      if(this.props.onItemRemove) this.props.onItemRemove(objectId);
-    });
+    const objectId = event.currentTarget.id;
+
+    if(!objectId) {
+      console.error('No ObjectId was given for the item');
+      return;
+    }
+
+    // CALL EXTERNAL EVENT HANDLER IF EXISTS
+    if(this.props.onItemRemove) this.props.onItemRemove(objectId);
   }
 
   @action.bound
   onItemUpdate(event) {
     event.preventDefault();
 
-    const idArray = event.target.id.split(',');
+    const idArray = event.currentTarget.id.split(',');
 
     const objectId  = idArray[0];
     const fieldName = idArray[1];
-    const newValue  = event.target.value;
+    const newValue  = event.currentTarget.value;
 
     const item = _find(this.items, { _id: objectId });
     item[fieldName] = newValue
 
     this.computeItems(this.items);
 
-    // if(this.props.onItemUpdate) this.props.onItemUpdate(item);
+    if(this.props.onItemUpdate) this.props.onItemUpdate(objectId, fieldName, newValue);
   }
 
   @action 
@@ -318,7 +302,7 @@ export default class StoctexTable extends Component {
           value:    item[key] || '',
           id: [item._id, key],
           type: this.getDataType(key),
-          onChange: this.onItemFieldChange
+          onChange: this.onItemUpdate
         };
         
         // FIELD IS EITHER A FUNCTION / UNMODIFIABLE / MODIFIABLE

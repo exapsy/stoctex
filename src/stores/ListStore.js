@@ -219,9 +219,19 @@ export default class ListStore {
 
   @action.bound
   updateItemDb(itemId, valueField, newValue) {
-    axios.put(
-      `${this.rest}/${itemId}?${valueField.toLowerCase()}=${newValue}`, 
-      { crossdomain: true });
+
+    return new Promise((resolve, reject) => {
+
+      if(!itemId) reject('Error Updating Item: itemId was undefined or null');
+      if(!valueField) reject('Error Updating Item: valueField was undefined or null');
+      if(!newValue) reject('Error Updating Item: newValue was undefined or null');
+
+      axios.put(
+        `${this.rest}/${itemId}?${valueField.toLowerCase()}=${newValue}`, 
+        { crossdomain: true })
+        .then(value => resolve(value))
+        .catch(err => reject(err));
+    });
   }
 
   @computed get objectKeys() {
