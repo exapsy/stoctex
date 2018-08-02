@@ -1,14 +1,14 @@
 {
   "v1": {
-    "customers": "https://localhost:8000/api/v1/customers",
-    "products":  "https://localhost:8000/api/v1/products",
-    "couriers":  "https://localhost:8000/api/v1/couriers",
-    "users":     "https://localhost:8000/api/v1/users",
+    "customers": "https://api.catter.io/api/v1/customers",
+    "products":  "https://api.catter.io/api/v1/products",
+    "couriers":  "https://api.catter.io/api/v1/couriers",
+    "users":     "https://api.catter.io/api/v1/users",
     "auth":     {
-      "isLoggedIn": "https://localhost:8000/api/v1/isLoggedIn",
-      "login":      "https://localhost:8000/api/v1/login",
-      "logout":     "https://localhost:8000/api/v1/logout",
-      "profile":    "https://localhost:8000/api/v1/profile"
+      "isLoggedIn": "https://api.catter.io/api/v1/isLoggedIn",
+      "login":      "https://api.catter.io/api/v1/login",
+      "logout":     "https://api.catter.io/api/v1/logout",
+      "profile":    "https://api.catter.io/api/v1/profile"
     }
   }
 }
