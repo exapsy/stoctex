@@ -1,14 +1,14 @@
 {
   "v1": {
-    "customers": "http://localhost:8000/api/v1/customers",
-    "products":  "http://localhost:8000/api/v1/products",
-    "couriers":  "http://localhost:8000/api/v1/couriers",
-    "users":     "http://localhost:8000/api/v1/users",
+    "customers": "https://localhost:8000/api/v1/customers",
+    "products":  "https://localhost:8000/api/v1/products",
+    "couriers":  "https://localhost:8000/api/v1/couriers",
+    "users":     "https://localhost:8000/api/v1/users",
     "auth":     {
-      "isLoggedIn": "http://localhost:8000/api/v1/isLoggedIn",
-      "login":      "http://localhost:8000/api/v1/login",
-      "logout":     "http://localhost:8000/api/v1/logout",
-      "profile":    "http://localhost:8000/api/v1/profile"
+      "isLoggedIn": "https://localhost:8000/api/v1/isLoggedIn",
+      "login":      "https://localhost:8000/api/v1/login",
+      "logout":     "https://localhost:8000/api/v1/logout",
+      "profile":    "https://localhost:8000/api/v1/profile"
     }
   }
 }
