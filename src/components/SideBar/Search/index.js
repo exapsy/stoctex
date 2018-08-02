@@ -19,26 +19,11 @@ export default class Search extends Component {
 
     const searchRegex = event.target;
     this.props.listStore.filterItems((value, index) => {
-      return searchRegex.test(value);
+      return searchRegex.test(value.code1) 
+      || searchRegex.test(value.barcode)
+      || searchRegex.test(value.name)
+      || searchRegex.test(value.code2);
     });
-    
-    if(event.target === '') {
-      await axios.get(`${api.v1.products}`)
-      .then(value => {
-        this.props.updateList(value.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });  
-    }
-    await axios.get(`${api.v1.products}?search=${event.target.value}`)
-      .then(value => {
-        console.log('Search Results:', value.data);
-        this.props.updateList(value.data);
-      })
-      .catch(err => {
-        console.error(err);
-      });
   }
 
   handleSubmit(event) {
