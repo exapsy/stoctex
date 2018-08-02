@@ -24,15 +24,23 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoggedIn: value.data === false ? false : true});
+      this.setState({userData: value.data, isLoggedIn: undefined});
     });
   }
   
   componentDidMount() {
+    this.login();
+  }
+
+  componentDidUpdate() {
+    this.login();
+  }
+
+  login() {
     this.isLoggedIn()
-      .then(value => {
-        this.setState({isLoggedIn: value})
-      })
+    .then(value => {
+      this.setState({isLoggedIn: value})
+    });
   }
 
   isLoggedIn() {
@@ -57,7 +65,11 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    return this.state.isLoggedIn ? <Main/> : <Login onSubmit={this.handleLoginSubmit}/>;
+    return this.state.isLoggedIn === undefined ? 
+    null 
+    : this.state.isLoggedIn === false 
+    ? <Login onSubmit={this.handleLoginSubmit}/>
+    : <Main/>;
   }
   render() {
     return (
