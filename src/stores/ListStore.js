@@ -17,6 +17,8 @@ import rest from '../config/rest';
  */
 export default class ListStore {
   @observable items = [];
+  
+  @observable filteredItems = [];
 
   @observable mode;
   
@@ -232,6 +234,11 @@ export default class ListStore {
         .then(value => resolve(value))
         .catch(err => reject(err));
     });
+  }
+
+  @action.bound
+  filterItems(callbackfn) {
+    this.filteredItems = filter(this.items, callbackfn);
   }
 
   @computed get objectKeys() {

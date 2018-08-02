@@ -35,7 +35,7 @@ export default class MainContent extends Component {
     // TABLE PROPERTIES FETCH
     const { 
       headers, 
-      items, 
+      filteredItems, 
       functions, 
       totalColumns, 
       columnsWidth, 
@@ -51,7 +51,7 @@ export default class MainContent extends Component {
       <div className='maincontent'>
         <Table 
           headers={headers}
-          items={toJS(items)}
+          items={toJS(filteredItems)}
           functions={functions}
           totalColumns={totalColumns}
           columnsWidth={columnsWidth}

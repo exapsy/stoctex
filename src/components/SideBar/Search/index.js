@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import axios                from 'axios';
+import { observer, inject }         from 'mobx-react';
 
 // LOCAL IMPORTS
 import api from '../../../config/rest';
 import './style.scss';
 
+@inject('listStore')
+@observer
 export default class Search extends Component {
   constructor(props) {
     super(props);
@@ -13,6 +16,12 @@ export default class Search extends Component {
   }
 
   async handleChange(event) {
+
+    const searchRegex = event.target;
+    this.props.listStore.filterItems((value, index) => {
+      return searchRegex.test(value);
+    });
+    
     if(event.target === '') {
       await axios.get(`${api.v1.products}`)
       .then(value => {
