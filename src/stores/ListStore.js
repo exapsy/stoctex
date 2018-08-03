@@ -124,14 +124,6 @@ export default class ListStore {
     this.fetchItems = this.fetchItems.bind(this);
   }
 
-  itemFilterReaction = reaction(
-    () => this.itemFilterCallback,
-    () => {
-      this.filterItems(this.itemFilterCallback);
-      console.log('Filtering Items');
-    }
-  );
-
   @computed get headers() {
     if(!this.mode) throw new Error('List mode was not defined during item fetching');
     return this._modeFields[this.mode].headers;
@@ -247,7 +239,7 @@ export default class ListStore {
   }
 
   @computed
-  get filterItems() {
+  get filteredItems() {
     return _filter(this.items, this.itemFilterCallback);
   }
 
