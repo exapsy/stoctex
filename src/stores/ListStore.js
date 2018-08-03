@@ -2,7 +2,8 @@
 import { 
   computed, 
   action, 
-  observable
+  observable,
+  reaction
 }               from 'mobx';
 import axios    from 'axios';
 import includes from 'lodash/includes';
@@ -18,7 +19,9 @@ import rest from '../config/rest';
 export default class ListStore {
   @observable items = [];
   
-  @observable filteredItems = [];
+  @observable itemFilterCallback = [];
+
+  @observable itemFilter = (value) => true;
 
   @observable mode;
   
@@ -122,9 +125,16 @@ export default class ListStore {
     this.addItemDb  = this.addItemDb.bind(this);
     this.fetchItems = this.fetchItems.bind(this);
 
-    this.filterItems(() => true);
+    this.filterItems(this.itemFilterCallback);
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    reaction(
+      () => this.itemFilterCallback,
+      () => this.filterItems(this.itemFilterCallback)
+    );
+  }
+  
 
   @computed get headers() {
     if(!this.mode) throw new Error('List mode was not defined during item fetching');
@@ -169,7 +179,10 @@ export default class ListStore {
 
       axios.get(this.rest)
         .then(
-          action("fetchItems.success", (res) => resolve(res.data)),
+          action("fetchItems.success", (res) => {
+            this.filterItems(this.itemFilterCallback);
+            resolve(res.data);
+          }),
           action("fetchItems.failure", (err) => reject(err))
         );
     });
@@ -241,6 +254,7 @@ export default class ListStore {
   @action.bound
   filterItems(callbackfn) {
     this.filteredItems = filter(this.items, callbackfn);
+    console.log('Filtered Items', this.filteredItems);
   }
 
   @computed get objectKeys() {
