@@ -19,9 +19,9 @@ import rest from '../config/rest';
 export default class ListStore {
   @observable items = [];
   
-  @observable itemFilterCallback = [];
+  @observable itemFilterCallback = (value) => true;
 
-  @observable itemFilter = (value) => true;
+  @observable filteredItems = [];
 
   @observable mode;
   
