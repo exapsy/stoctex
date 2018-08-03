@@ -131,7 +131,10 @@ export default class ListStore {
   componentDidUpdate(prevProps, prevState) {
     reaction(
       () => this.itemFilterCallback,
-      () => this.filterItems(this.itemFilterCallback)
+      () => {
+        this.filterItems(this.itemFilterCallback);
+        console.log('Filtering Items');
+      }
     );
   }
   
