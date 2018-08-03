@@ -126,11 +126,6 @@ export default class ListStore {
     this.fetchItems = this.fetchItems.bind(this);
   }
 
-  componentDidMount() {
-    this.filterItems(() => true);
-    console.log('ListStore mounted, filteredItems', this.filteredItems);
-  }
-
   componentDidUpdate(prevProps, prevState) {
     
   }
@@ -187,7 +182,6 @@ export default class ListStore {
       axios.get(this.rest)
         .then(
           action("fetchItems.success", (res) => {
-            this.filterItems(this.itemFilterCallback);
             resolve(res.data);
           }),
           action("fetchItems.failure", (err) => reject(err))

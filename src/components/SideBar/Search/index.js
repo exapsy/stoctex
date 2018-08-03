@@ -14,6 +14,10 @@ export default class Search extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    this.props.listStore.itemFilterCallback = ((value) => true);
+  }
+
   handleChange(event) {
 
     const searchRegex = new RegExp(event.target.value, 'i');
