@@ -32,10 +32,6 @@ export default class SceneSelector extends Component {
     this.login();
   }
 
-  componentDidUpdate() {
-    this.login();
-  }
-
   login() {
     this.isLoggedIn()
     .then(value => {
