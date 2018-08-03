@@ -247,8 +247,8 @@ export default class ListStore {
   }
 
   @computed
-  filterItems(callbackfn) {
-    return _filter(this.items, callbackfn);
+  get filterItems() {
+    return _filter(this.items, this.itemFilterCallback);
   }
 
   @computed get objectKeys() {
