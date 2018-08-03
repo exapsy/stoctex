@@ -121,6 +121,8 @@ export default class ListStore {
 
     this.addItemDb  = this.addItemDb.bind(this);
     this.fetchItems = this.fetchItems.bind(this);
+
+    this.filterItems(() => true);
   }
 
 
