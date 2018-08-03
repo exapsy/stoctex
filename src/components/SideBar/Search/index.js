@@ -17,7 +17,7 @@ export default class Search extends Component {
 
   async handleChange(event) {
 
-    const searchRegex = event.target;
+    const searchRegex = new RegExp(event.target);
     this.props.listStore.filterItems((value, index) => {
       return searchRegex.test(value.code1) 
       || searchRegex.test(value.barcode)
