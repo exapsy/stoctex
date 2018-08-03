@@ -127,7 +127,8 @@ export default class ListStore {
   }
 
   componentDidMount() {
-    this.filterItems(this.itemFilterCallback);
+    this.filterItems(() => true);
+    console.log('ListStore mounted, filteredItems', this.filteredItems);
   }
 
   componentDidUpdate(prevProps, prevState) {
