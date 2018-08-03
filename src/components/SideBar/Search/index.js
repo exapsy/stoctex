@@ -15,11 +15,13 @@ export default class Search extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  async handleChange(event) {
+  handleChange(event) {
 
     const searchRegex = new RegExp(event.target.value);
     console.log('Searching for', searchRegex);
     this.props.listStore.itemFilterCallback = ((value, index) => {
+      console.log(`regex ${searchRegex} test ${value.code1} == ${searchRegex.test(value.code1)}`);
+      
       return searchRegex.test(value.code1) 
       || searchRegex.test(value.barcode)
       || searchRegex.test(value.name)
