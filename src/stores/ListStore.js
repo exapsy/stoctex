@@ -6,9 +6,9 @@ import {
   reaction
 }               from 'mobx';
 import axios    from 'axios';
-import includes from 'lodash/includes';
-import filter   from 'lodash/filter';
-import reduce   from 'lodash/reduce';
+import _includes from 'lodash/includes';
+import _filter   from 'lodash/filter';
+import _reduce   from 'lodash/reduce';
 
 // LOCAL IMPORTS
 import rest from '../config/rest';
@@ -118,13 +118,15 @@ export default class ListStore {
    * @param {this.modes} mode The type of model for the list to retrieve
    */
   constructor(mode) {
-    if(!includes(ListStore.modes, mode)) throw new Error('Selected Mode does not exist');
+    if(!_includes(ListStore.modes, mode)) throw new Error('Selected Mode does not exist');
 
     this.mode = mode;
 
     this.addItemDb  = this.addItemDb.bind(this);
     this.fetchItems = this.fetchItems.bind(this);
+  }
 
+  componentDidMount() {
     this.filterItems(this.itemFilterCallback);
   }
 
@@ -256,19 +258,19 @@ export default class ListStore {
 
   @action.bound
   filterItems(callbackfn) {
-    this.filteredItems = filter(this.items, callbackfn);
+    this.filteredItems = _filter(this.items, callbackfn);
     console.log('Filtered Items', this.filteredItems);
   }
 
   @computed get objectKeys() {
     const headerKeys = Object.keys(this._modeFields[this.mode].headers)
-    return filter(headerKeys, (header) => {
+    return _filter(headerKeys, (header) => {
       return !this.isFieldFunction(header);
     });
   }
 
   sum(array) {
-    return reduce(array, (total, n) => {
+    return _reduce(array, (total, n) => {
       n = !n ? 0 : n;
       return Number(total) + Number(n);
     });

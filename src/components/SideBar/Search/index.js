@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios                from 'axios';
-import { observer, inject }         from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 
 // LOCAL IMPORTS
 import api from '../../../config/rest';
@@ -18,6 +18,7 @@ export default class Search extends Component {
   async handleChange(event) {
 
     const searchRegex = new RegExp(event.target);
+    console.log('Searching for', searchRegex);
     this.props.listStore.itemFilterCallback = ((value, index) => {
       return searchRegex.test(value.code1) 
       || searchRegex.test(value.barcode)
