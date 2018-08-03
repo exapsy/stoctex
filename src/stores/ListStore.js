@@ -131,15 +131,16 @@ export default class ListStore {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    reaction(
-      () => this.itemFilterCallback,
-      () => {
-        this.filterItems(this.itemFilterCallback);
-        console.log('Filtering Items');
-      }
-    );
+    
   }
-  
+
+  itemFilterReaction = reaction(
+    () => this.itemFilterCallback,
+    () => {
+      this.filterItems(this.itemFilterCallback);
+      console.log('Filtering Items');
+    }
+  );
 
   @computed get headers() {
     if(!this.mode) throw new Error('List mode was not defined during item fetching');

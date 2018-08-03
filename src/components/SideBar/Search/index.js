@@ -3,7 +3,6 @@ import axios                from 'axios';
 import { observer, inject } from 'mobx-react';
 
 // LOCAL IMPORTS
-import api from '../../../config/rest';
 import './style.scss';
 
 @inject('listStore')
@@ -21,7 +20,7 @@ export default class Search extends Component {
     console.log('Searching for', searchRegex);
     this.props.listStore.itemFilterCallback = ((value, index) => {
       console.log(`regex ${searchRegex} test ${value.code1} == ${searchRegex.test(value.code1)}`);
-      
+
       return searchRegex.test(value.code1) 
       || searchRegex.test(value.barcode)
       || searchRegex.test(value.name)
