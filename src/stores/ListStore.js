@@ -19,9 +19,7 @@ import rest from '../config/rest';
 export default class ListStore {
   @observable items = [];
   
-  @observable itemFilterCallback = (value) => true;
-
-  @observable filteredItems = [];
+  @observable itemFilterCallback = () => true;
 
   @observable mode;
   
@@ -124,10 +122,6 @@ export default class ListStore {
 
     this.addItemDb  = this.addItemDb.bind(this);
     this.fetchItems = this.fetchItems.bind(this);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    
   }
 
   itemFilterReaction = reaction(
@@ -252,10 +246,9 @@ export default class ListStore {
     });
   }
 
-  @action.bound
+  @computed
   filterItems(callbackfn) {
-    this.filteredItems = _filter(this.items, callbackfn);
-    console.log('Filtered Items', this.filteredItems);
+    return _filter(this.items, callbackfn);
   }
 
   @computed get objectKeys() {
