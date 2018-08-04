@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios                from  'axios';
+import {
+  Dimmer,
+  Loader
+}                           from 'semantic-ui-react';
 
 // LOCAL IMPORTS
 import Login from './Login';
@@ -24,7 +28,7 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoggedIn: undefined});
+      this.setState({userData: value.data, isLoggedIn: false, isLoading: true});
     });
   }
   
@@ -35,7 +39,7 @@ export default class SceneSelector extends Component {
   login() {
     this.isLoggedIn()
     .then(value => {
-      this.setState({isLoggedIn: value})
+      this.setState({isLoggedIn: value, isLoading: false})
     });
   }
 
@@ -61,11 +65,19 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    return this.state.isLoggedIn === undefined ? 
-    null 
-    : this.state.isLoggedIn === false 
-    ? <Login onSubmit={this.handleLoginSubmit}/>
-    : <Main/>;
+    const scene = (this.state.isLoggedIn ? 
+      <Main/> 
+      : <Login onSubmit={this.handleLoginSubmit}/>
+    )
+    return (
+      <Dimmer.Dimmerable dimmed={this.state.isLoading}>
+        {scene}
+
+        <Dimmer active={this.state.isLoading}>
+          <Loader/>
+        </Dimmer>
+      </Dimmer.Dimmerable>
+    );
   }
   render() {
     return (
