@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import axios                from  'axios';
-import {
-  Dimmer,
-  Loader
-}                           from 'semantic-ui-react';
 
 // LOCAL IMPORTS
 import Login from './Login';
@@ -13,7 +9,7 @@ import api from '../config/rest';
 export default class SceneSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = {userData: {}, isLoggedIn: false, isLoading: true, };
+    this.state = {userData: {}, isLoggedIn: false};
     this.getScene          = this.getScene.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
@@ -28,16 +24,19 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoggedIn: value ? true : false});
+      this.setState({userData: value.data, isLoggedIn: undefined});
     });
   }
   
   componentDidMount() {
+    this.login();
+  }
+
+  login() {
     this.isLoggedIn()
-      .then(isLoggedIn => {
-        console.log('logged in?', isLoggedIn);
-        this.setState({isLoading: false, isLoggedIn})
-      });
+    .then(value => {
+      this.setState({isLoggedIn: value})
+    });
   }
 
   isLoggedIn() {
@@ -62,38 +61,16 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-
-    if(this.state.isLoggedIn) {
-      return (
-        <div>
-          <Dimmer.Dimmable dimmed={this.state.isLoading} blurring>
-            <Login handleSubmit={this.handleLoginSubmit}/>
-
-            <Dimmer active={this.state.isLoading}>
-              <Loader />
-            </Dimmer>
-          </Dimmer.Dimmable>
-        </div>
-      )
-    }
-    else {
-      return(
-        <div>
-          <Main/>
-        </div>
-      )
-    }
+    return this.state.isLoggedIn === undefined ? 
+    null 
+    : this.state.isLoggedIn === false 
+    ? <Login onSubmit={this.handleLoginSubmit}/>
+    : <Main/>;
   }
   render() {
     return (
       <div className='Scene'>
-        <Dimmer.Dimmable dimmed={this.state.isLoading} blurring>
-            <Login onSubmit={this.handleLoginSubmit}/>
-
-            <Dimmer active={this.state.isLoading}>
-              <Loader />
-            </Dimmer>
-          </Dimmer.Dimmable>
+        {this.getScene()}
       </div>
     )
   }
