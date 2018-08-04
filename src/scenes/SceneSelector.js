@@ -13,7 +13,7 @@ import api from '../config/rest';
 export default class SceneSelector extends Component {
   constructor(props) {
     super(props);
-    this.state = {userData: {}, isLoggedIn: false};
+    this.state = {userData: {}, isLoggedIn: false, isLoading: true, };
     this.getScene          = this.getScene.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
   }
@@ -28,7 +28,7 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoading: true, isLoggedIn: false});
+      this.setState({userData: value.data, isLoggedIn: value ? true : false});
     });
   }
   
