@@ -437,6 +437,8 @@ export default class StoctexTable extends Component {
           </Dimmer>
           <Confirm 
             open={this.confirmDimmer.active} 
+            cancelButton='Cancel'
+            confirmButton='Delete'
             onCancel={() => this.confirmDimmer.active = false }
             onConfirm={this.onItemRemove}/>
         </Dimmer.Dimmable>
