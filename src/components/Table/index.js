@@ -407,7 +407,7 @@ export default class StoctexTable extends Component {
 
     return (
       <div className='table'>
-        <Dimmer.Dimmable dimmed={this.error.active} blurring>
+        <Dimmer.Dimmable dimmed={this.message.active} blurring>
           <Table {...tableProps}>
             {this.tableHeader}
             <Transition.Group as={Table.Body} animation='browse' duration={500}>
