@@ -70,8 +70,9 @@ export default class SceneSelector extends Component {
       : <Login onSubmit={this.handleLoginSubmit}/>;
     
     return (
+      <div>
         {scene}
-
+      </div>
     );
   }
   render() {
