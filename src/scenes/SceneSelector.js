@@ -84,9 +84,7 @@ export default class SceneSelector extends Component {
     return (
       <div className='Scene'>
         <div>
-          <Dimmer active>
-            <Loader />
-          </Dimmer>
+          {this.getScene()}
         </div>
       </div>
     )
