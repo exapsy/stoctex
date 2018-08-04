@@ -35,6 +35,7 @@ export default class SceneSelector extends Component {
   componentDidMount() {
     this.isLoggedIn()
       .then(isLoggedIn => {
+        console.log('logged in?', isLoggedIn);
         this.setState({isLoading: false, isLoggedIn})
       });
   }
@@ -72,7 +73,7 @@ export default class SceneSelector extends Component {
     }
     else if(this.state.isLoggedIn) {
       return (
-        <Login/>
+        <Login handleSubmit={this.handleLoginSubmit}/>
       )
     }
     else {
