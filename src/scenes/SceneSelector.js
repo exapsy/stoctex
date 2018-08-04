@@ -63,9 +63,11 @@ export default class SceneSelector extends Component {
   getScene() {
     if(this.state.isLoading) {
       return (
-      <Dimmer active>
-        <Loader />
-      </Dimmer>
+        <div>
+          <Dimmer active>
+            <Loader />
+          </Dimmer>
+        </div>
       )
     }
     else if(this.state.isLoggedIn) {
