@@ -21,7 +21,9 @@ export default class SceneSelector extends Component {
   }
 
   async handleLoginSubmit(userData) {
+    
     this.setState({isLoading: true});
+
     await axios.post(
       api.v1.auth.login,
       userData,

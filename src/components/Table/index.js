@@ -17,7 +17,8 @@ import {
   Input,
   Dimmer,
   Header,
-  Transition
+  Transition,
+  Confirm
 }                           from 'semantic-ui-react';
 
 import './style.scss';
@@ -49,6 +50,7 @@ export default class StoctexTable extends Component {
   @observable form  = {};
   @observable items = [];
   @observable message = {active: false, text: '', type: 'warning'};
+  @observable confirmDimmer = {active: false, confirmed: false};
 
   constructor(props) {
     super(props);
@@ -126,20 +128,27 @@ export default class StoctexTable extends Component {
   onItemRemove(event) {
     event.preventDefault();
     
-    const objectId = event.currentTarget.id;
-
-    if(!objectId) {
-      console.error('No ObjectId was given for the item');
-      return;
+    if(!this.confirmDimmer.active) {
+      this.confirmDimmer.active = true;
     }
+    else {
+      this.confirmDimmer.active = false;
+      
+      const objectId = event.currentTarget.id;
 
-    // CALL EXTERNAL EVENT HANDLER IF EXISTS
-    if(this.props.onItemRemove) {
-      try {
-        this.props.onItemRemove(objectId);
+      if(!objectId) {
+        console.error('No ObjectId was given for the item');
+        return;
       }
-      catch(e) {
-        this.triggerMessage(e.response.data.errmsg, 'error');
+
+      // CALL EXTERNAL EVENT HANDLER IF EXISTS
+      if(this.props.onItemRemove) {
+        try {
+          this.props.onItemRemove(objectId);
+        }
+        catch(e) {
+          this.triggerMessage(e.response.data.errmsg, 'error');
+        }
       }
     }
   }
@@ -424,6 +433,7 @@ export default class StoctexTable extends Component {
               {this.message.text}
             </Header>
           </Dimmer>
+          <Confirm open={this.confirmDimmer.active} onConfirm={this.confirmDimmer.confirmed}/>
         </Dimmer.Dimmable>
       </div>
     )
