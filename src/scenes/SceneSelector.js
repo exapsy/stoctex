@@ -16,6 +16,8 @@ export default class SceneSelector extends Component {
     this.state = {userData: {}, isLoggedIn: false};
     this.getScene          = this.getScene.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
+
+    this.state = {isLoading: true, isLoggedIn: false};
   }
 
   async handleLoginSubmit(userData) {
