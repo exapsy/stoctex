@@ -28,19 +28,15 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoggedIn: undefined});
+      this.setState({userData: value.data, isLoading: true, isLoggedIn: false});
     });
   }
   
   componentDidMount() {
-    this.login();
-  }
-
-  login() {
     this.isLoggedIn()
-    .then(value => {
-      this.setState({isLoggedIn: value})
-    });
+      .then(isLoggedIn => {
+        this.setState({isLoading: false, isLoggedIn})
+      });
   }
 
   isLoggedIn() {
@@ -65,15 +61,23 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    return this.state.isLoggedIn === undefined ||
-    this.state.isLoggedIn === null ||
-    this.state.isLoggedIn === '' ? 
-    <Dimmer active style={{backgroundColor: '#202025'}}>
-      <Loader />
-    </Dimmer> 
-    : this.state.isLoggedIn === false 
-    ? <Login onSubmit={this.handleLoginSubmit}/>
-    : <Main/>;
+    if(this.state.isLoading) {
+      return (
+      <Dimmer active>
+        <Loader />
+      </Dimmer>
+      )
+    }
+    else if(this.state.isLoggedIn) {
+      return (
+        <Login/>
+      )
+    }
+    else {
+      return(
+        <Main/>
+      )
+    }
   }
   render() {
     return (
