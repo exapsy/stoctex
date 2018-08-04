@@ -421,7 +421,7 @@ export default class StoctexTable extends Component {
               Error
             </Header>
             <Header as='h2'>
-              {this.message}
+              {this.message.text}
             </Header>
           </Dimmer>
         </Dimmer.Dimmable>
