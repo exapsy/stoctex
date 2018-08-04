@@ -62,18 +62,16 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    if(this.state.isLoading) {
+
+    if(this.state.isLoggedIn) {
       return (
-        <div>
+        <Dimmer.Dimmable active={this.state.isLoading}>
+          <Login handleSubmit={this.handleLoginSubmit}/>
+
           <Dimmer active>
             <Loader />
           </Dimmer>
-        </div>
-      )
-    }
-    else if(this.state.isLoggedIn) {
-      return (
-        <Login handleSubmit={this.handleLoginSubmit}/>
+        </Dimmer.Dimmable>
       )
     }
     else {
