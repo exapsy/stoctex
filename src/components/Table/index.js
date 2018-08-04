@@ -438,8 +438,7 @@ export default class StoctexTable extends Component {
           <Modal 
             open={this.confirmDimmer.active} 
             basic
-            onCancel={() => this.confirmDimmer.active = false }
-            onConfirm={this.onItemRemove}>
+            size='small'>
               <Header icon='message' content='Remove Item' />
               <Modal.Content>
                 <p>
