@@ -85,9 +85,13 @@ export default class SceneSelector extends Component {
   render() {
     return (
       <div className='Scene'>
-        <div>
-          {this.getScene()}
-        </div>
+        <Dimmer.Dimmable dimmed={this.state.isLoading} blurring>
+            <Login handleSubmit={this.handleLoginSubmit}/>
+
+            <Dimmer active={this.state.isLoading}>
+              <Loader />
+            </Dimmer>
+          </Dimmer.Dimmable>
       </div>
     )
   }
