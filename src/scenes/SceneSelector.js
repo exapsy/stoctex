@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import axios                from  'axios';
+import {
+  Dimmer,
+  Loader
+}                           from 'semantic-ui-react';
 
 // LOCAL IMPORTS
 import Login from './Login';
@@ -61,8 +65,12 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    return this.state.isLoggedIn === undefined ? 
-    null 
+    return this.state.isLoggedIn === undefined ||
+    this.state.isLoggedIn === null ||
+    this.state.isLoggedIn === '' ? 
+    <Dimmer active style={{backgroundColor: '#202025'}}>
+      <Loader />
+    </Dimmer> 
     : this.state.isLoggedIn === false 
     ? <Login onSubmit={this.handleLoginSubmit}/>
     : <Main/>;
