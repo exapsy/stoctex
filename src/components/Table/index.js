@@ -416,7 +416,7 @@ export default class StoctexTable extends Component {
             </Transition.Group>
           </Table>
 
-          <Dimmer onClickOutside={handleHide}>
+          <Dimmer active={this.message.active} onClickOutside={handleHide}>
             <Header as='h1' color='red'>
               Error
             </Header>
