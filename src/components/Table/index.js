@@ -446,11 +446,11 @@ export default class StoctexTable extends Component {
                 </p>
               </Modal.Content>
               <Modal.Actions>
-                <Button basic color='red' inverted onClick={() => this.confirmDimmer.active=false} labelPosition='left'>
+                <Button basic color='red' inverted onClick={() => this.confirmDimmer.active=false} icon labelPosition='left'>
                   <Icon name='remove'/>
                   No
                 </Button>
-                <Button basic color='green' inverted onClick={this.onItemRemove} labelPosition='left'>
+                <Button basic color='green' inverted onClick={this.onItemRemove} icon labelPosition='left'>
                   <Icon name='checkmark'/>
                   Yes
                 </Button>
