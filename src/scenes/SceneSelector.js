@@ -39,7 +39,7 @@ export default class SceneSelector extends Component {
   login() {
     this.isLoggedIn()
     .then(value => {
-      this.setState({isLoggedIn: value, isLoading: value})
+      this.setState({isLoggedIn: value, isLoading: !value})
     });
   }
 
