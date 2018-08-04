@@ -48,7 +48,7 @@ export default class StoctexTable extends Component {
 
   @observable form  = {};
   @observable items = [];
-  @observable error = {active: false, message: ''};
+  @observable message = {active: false, text: '', type: 'warning'};
 
   constructor(props) {
     super(props);
@@ -117,8 +117,7 @@ export default class StoctexTable extends Component {
       }
       catch(e) {
         console.error(e.message);
-        this.error.message = e.response.data.errmsg;
-        this.error.active  = true;
+        this.triggerMessage(e.response.data.errmsg, 'error');
       }
     }
   }
@@ -135,7 +134,14 @@ export default class StoctexTable extends Component {
     }
 
     // CALL EXTERNAL EVENT HANDLER IF EXISTS
-    if(this.props.onItemRemove) this.props.onItemRemove(objectId);
+    if(this.props.onItemRemove) {
+      try {
+        this.props.onItemRemove(objectId);
+      }
+      catch(e) {
+        this.triggerMessage(e.response.data.errmsg, 'error');
+      }
+    }
   }
 
   @action.bound
@@ -153,7 +159,14 @@ export default class StoctexTable extends Component {
 
     this.computeItems(this.items);
 
-    if(this.props.onItemUpdate) this.props.onItemUpdate(objectId, fieldName, newValue);
+    if(this.props.onItemUpdate) {
+      try {
+        this.props.onItemUpdate(objectId, fieldName, newValue);
+      }
+      catch(e) {
+        this.triggerMessage(e.response.data.errmsg, 'error');
+      }
+    }
   }
 
   @action 
@@ -372,6 +385,12 @@ export default class StoctexTable extends Component {
     return this.props.modifiableFields[fieldName];
   }
 
+  triggerMessage(message, type) {
+    this.message.text   = message;
+    this.message.active = true;
+    this.message.type   = type;
+  }
+
   render() {
     const { totalColumns } = this.props;
 
@@ -388,7 +407,7 @@ export default class StoctexTable extends Component {
 
     return (
       <div className='table'>
-        {/* <Dimmer.Dimmable dimmed={this.error.active} blurring> */}
+        <Dimmer.Dimmable dimmed={this.error.active} blurring>
           <Table {...tableProps}>
             {this.tableHeader}
             <Transition.Group as={Table.Body} animation='browse' duration={500}>
@@ -402,10 +421,10 @@ export default class StoctexTable extends Component {
               Error
             </Header>
             <Header as='h2'>
-              {this.error.message}
+              {this.message}
             </Header>
           </Dimmer>
-        {/* </Dimmer.Dimmable> */}
+        </Dimmer.Dimmable>
       </div>
     )
   }
