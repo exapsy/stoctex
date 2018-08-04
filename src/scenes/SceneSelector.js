@@ -71,7 +71,13 @@ export default class SceneSelector extends Component {
     
     return (
       <div>
-        {scene}
+        <Dimmer.Dimmable dimmed={this.state.isLoading}>
+          {scene}
+
+          <Dimmer active={this.state.isLoading}>
+
+          </Dimmer>
+        </Dimmer.Dimmable>
       </div>
     );
   }
