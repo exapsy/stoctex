@@ -18,7 +18,7 @@ import {
   Dimmer,
   Header,
   Transition,
-  Confirm
+  Modal
 }                           from 'semantic-ui-react';
 
 import './style.scss';
@@ -435,12 +435,26 @@ export default class StoctexTable extends Component {
               {this.message.text}
             </Header>
           </Dimmer>
-          <Confirm 
+          <Modal 
             open={this.confirmDimmer.active} 
-            cancelButton='Cancel'
-            confirmButton='Delete'
+            basic
             onCancel={() => this.confirmDimmer.active = false }
-            onConfirm={this.onItemRemove}/>
+            onConfirm={this.onItemRemove}>
+              <Header icon='message' content='Remove Item' />
+              <Modal.Content>
+                <p>
+                  You sure want to remove the Item?
+                </p>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button basic color='red' inverted onClick={() => this.message.active=false}>
+                  <Icon name='remove'/> No
+                </Button>
+                <Button basic color='green' inverted onClick={this.onItemRemove}>
+                  <Icon name='checkmark'/> Yes
+                </Button>
+              </Modal.Actions>
+            </Modal>
         </Dimmer.Dimmable>
       </div>
     )
