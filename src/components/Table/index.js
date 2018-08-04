@@ -50,7 +50,7 @@ export default class StoctexTable extends Component {
   @observable form  = {};
   @observable items = [];
   @observable message = {active: false, text: '', type: 'warning'};
-  @observable confirmDimmer = {active: false, confirmed: false};
+  @observable confirmDimmer = {active: false, confirmed: false, itemId: null};
 
   constructor(props) {
     super(props);
@@ -130,11 +130,13 @@ export default class StoctexTable extends Component {
     
     if(!this.confirmDimmer.active) {
       this.confirmDimmer.active = true;
+      this.confirmDimmer.itemId = event.currentTarget.id;
     }
     else {
       this.confirmDimmer.active = false;
       
-      const objectId = event.currentTarget.id;
+      const objectId = this.confirmDimmer.itemId;
+      this.confirmDimmer.itemId = null;
 
       if(!objectId) {
         console.error('No ObjectId was given for the item');
