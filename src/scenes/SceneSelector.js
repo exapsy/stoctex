@@ -65,10 +65,10 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    const scene = (this.state.isLoggedIn ? 
+    const scene = this.state.isLoggedIn ? 
       <Main/> 
-      : <Login onSubmit={this.handleLoginSubmit}/>
-    )
+      : <Login onSubmit={this.handleLoginSubmit}/>;
+    
     return (
       <Dimmer.Dimmerable dimmed={this.state.isLoading}>
         {scene}
