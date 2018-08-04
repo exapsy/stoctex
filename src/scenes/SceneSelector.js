@@ -70,13 +70,8 @@ export default class SceneSelector extends Component {
       : <Login onSubmit={this.handleLoginSubmit}/>;
     
     return (
-      <Dimmer.Dimmerable dimmed={this.state.isLoading}>
         {scene}
 
-        <Dimmer active={this.state.isLoading}>
-          <Loader/>
-        </Dimmer>
-      </Dimmer.Dimmerable>
     );
   }
   render() {
