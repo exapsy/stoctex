@@ -29,7 +29,7 @@ export default class SceneSelector extends Component {
         }
       }
     ).then(value => {
-      this.setState({userData: value.data, isLoggedIn: false, isLoading: false});
+      this.setState({userData: value.data, isLoggedIn: value ? true : false, isLoading: false});
     });
   }
   
