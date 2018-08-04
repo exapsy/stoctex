@@ -78,7 +78,9 @@ export default class SceneSelector extends Component {
     }
     else {
       return(
-        <Main/>
+        <div>
+          <Main/>
+        </div>
       )
     }
   }
@@ -86,7 +88,7 @@ export default class SceneSelector extends Component {
     return (
       <div className='Scene'>
         <Dimmer.Dimmable dimmed={this.state.isLoading} blurring>
-            <Login handleSubmit={this.handleLoginSubmit}/>
+            <Login onSubmit={this.handleLoginSubmit}/>
 
             <Dimmer active={this.state.isLoading}>
               <Loader />
