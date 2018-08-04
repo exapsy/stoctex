@@ -3,7 +3,6 @@ import {
   computed, 
   action, 
   observable,
-  reaction
 }               from 'mobx';
 import axios    from 'axios';
 import _includes from 'lodash/includes';
@@ -17,6 +16,7 @@ import rest from '../config/rest';
  * Stores and Retrieves List data through and from the API
  */
 export default class ListStore {
+
   @observable items = [];
   
   @observable itemFilterCallback = () => true;
@@ -74,7 +74,7 @@ export default class ListStore {
       },
       modifiableFields: {
         code1:   false,
-        code2:   false,
+        code2:   true,
         barcode: false,
         name:    false,
         gs:      true,

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios                from 'axios';
 import { observer, inject } from 'mobx-react';
 
 // LOCAL IMPORTS

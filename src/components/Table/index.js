@@ -10,7 +10,6 @@ import uuid                 from 'uuid';
 import _map                  from 'lodash/map';
 import _find                 from 'lodash/find';
 import _forEach              from 'lodash/forEach';
-import _remove               from 'lodash/remove';
 import {
   Table,
   Button,
