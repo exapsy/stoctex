@@ -18,11 +18,14 @@ export default class Search extends Component {
   }
 
   handleChange(event) {
+    
+    RegExp.escape = function(string) {
+      return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+    };
 
-    const searchRegex = new RegExp(event.target.value, 'i');
-    console.log('Searching for', searchRegex);
+    const searchRegex = new RegExp(RegExp.escape(event.target.value), 'i');
+
     this.props.listStore.itemFilterCallback = ((value, index) => {
-      console.log(`regex ${searchRegex} test ${value.code1} == ${searchRegex.test(value.code1)}`);
 
       return searchRegex.test(value.code1) 
       || searchRegex.test(value.barcode)
