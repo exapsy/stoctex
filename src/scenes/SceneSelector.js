@@ -8,7 +8,7 @@ import {
 // LOCAL IMPORTS
 import Login from './Login';
 import Main  from './Main';
-import api from '../config/rest';
+import api from '../config/api';
 
 export default class SceneSelector extends Component {
   constructor(props) {

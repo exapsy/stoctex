@@ -10,7 +10,7 @@ import _filter   from 'lodash/filter';
 import _reduce   from 'lodash/reduce';
 
 // LOCAL IMPORTS
-import rest from '../config/rest';
+import api from '../config/api';
 
 /**
  * Stores and Retrieves List data through and from the API
@@ -83,7 +83,7 @@ export default class ListStore {
         cclit:   true,
         gp_k:    true
       },
-      rest: rest.v1.products
+      api: api.v1.products
     },
     customers: {
       headers: {
@@ -99,7 +99,7 @@ export default class ListStore {
         address: 'Address',
         zip: 'ZIP'
       },
-      rest: rest.v1.customers
+      api: api.v1.customers
     },
     couriers: {
       headers: {
@@ -107,7 +107,7 @@ export default class ListStore {
         email: 'Email', 
         phone: 'Phone'
       },
-      rest: rest.v1.couriers
+      api: api.v1.couriers
     }
   });
 
@@ -212,11 +212,11 @@ export default class ListStore {
    * Provides the API url depending on the current 'mode' - See: 'modes' enumerable
    * @returns {string} The URL that corresponds to the current mode
    */
-  @computed get rest() {
+  @computed get api() {
     // Mode must be defined
     if(!this.mode) throw new Error('List mode was not defined during item fetching');
     
-    return this._modeFields[this.mode].rest;
+    return this._modeFields[this.mode].api;
   }
 
   /**
@@ -230,7 +230,7 @@ export default class ListStore {
     return new Promise((resolve, reject) => {
 
       // API URL to make `post` request to
-      const url = this.rest;
+      const url = this.api;
 
       // API get Request
       axios.get(url)
@@ -257,7 +257,7 @@ export default class ListStore {
       if(!item) reject('Item parameter was undefined');
 
       // API URL to make `post` request to
-      const url = this.rest;
+      const url = this.api;
 
       // API post Request
       axios.post(
@@ -300,7 +300,7 @@ export default class ListStore {
       if(!itemId) reject(`Object's ID wasn't given, unable to remove item`);
 
       // API URL to make `delete` request to
-      const url = `${this.rest}/${itemId}`;
+      const url = `${this.api}/${itemId}`;
 
       // API delete Request
       axios.delete(url)
@@ -343,7 +343,7 @@ export default class ListStore {
       if(!newValue) reject('Error Updating Item: newValue was undefined or null');
 
       // API URL to make `put` request to
-      const url = `${this.rest}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
+      const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
       // API put Request
       axios.put(url)

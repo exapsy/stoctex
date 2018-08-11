@@ -5,7 +5,7 @@ import map                  from 'lodash/map';
 // LOCAL IMPORTS
 import Search       from './Search';
 import ProfileImage from '../../images/germanos_prof.jpeg'
-import api          from '../../config/rest';
+import api          from '../../config/api';
 import './style.scss'
 
 export default class SideBar extends Component {
