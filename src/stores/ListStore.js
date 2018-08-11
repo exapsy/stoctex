@@ -131,7 +131,9 @@ export default class ListStore {
    * @returns {{fieldName: string}}
    */
   @computed get headers() {
+    // Mode must be defined
     if(!this.mode) throw new Error('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].headers;
   }
   
@@ -140,6 +142,9 @@ export default class ListStore {
    * @returns {number} Amount of columns
    */
   @computed get totalColumns() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].totalColumns;
   }
 
@@ -148,6 +153,9 @@ export default class ListStore {
    * @returns {Array.<number>)}
    */
   @computed get columnsWidth() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].columnsWidth;
   }
 
@@ -156,6 +164,9 @@ export default class ListStore {
    * @returns {{fieldName: function}}
    */
   @computed get functions() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].functions;
   }
 
@@ -164,6 +175,9 @@ export default class ListStore {
    * @returns {{fieldName: type}}
    */
   @computed get dataTypes() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].dataTypes;
   }
 
@@ -172,6 +186,9 @@ export default class ListStore {
    * @returns {{fieldName: boolean}}
    */
   @computed get requiredFields() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].requiredFields;
   }
 
@@ -181,6 +198,9 @@ export default class ListStore {
    * @returns {{fieldName: boolean}}
    */
   @computed get modifiableFields() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].modifiableFields;
   }
 
@@ -189,6 +209,9 @@ export default class ListStore {
    * @returns {string} The URL that corresponds to the current mode
    */
   @computed get rest() {
+    // Mode must be defined
+    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    
     return this._modeFields[this.mode].rest;
   }
 
