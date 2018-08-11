@@ -1,4 +1,5 @@
 {
+  "base": "https://gphub.gpsupplies.com",
   "v1": {
     "customers": "https://gphub.gpsupplies.com/api/v1/customers",
     "products":  "https://gphub.gpsupplies.com/api/v1/products",

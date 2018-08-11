@@ -1,4 +1,5 @@
 {
+  "base": "https://localhost",
   "v1": {
     "customers": "https://localhost/api/v1/customers",
     "products":  "https://localhost/api/v1/products",
