@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
 /**
  * Renders an Error Block which describes the error if an error was catched

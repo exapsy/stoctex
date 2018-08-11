@@ -14,7 +14,7 @@ let options = {
   file: {
     level: 'info',
     name: 'log-file',
-    filename: './logs/info.log',
+    filename: './logs/info-' + now + '.log',
     handleExceptions: true,
     json: true,
     maxsize: 5242880, // 5MB

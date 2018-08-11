@@ -13,7 +13,7 @@ import './css/webflow.css';
 class App extends Component {
   render() {
     return (
-      <div className="App">
+      <div className="app">
         <Provider listStore={new ListStore(ListStore.modes.PRODUCTS)}>
           <ErrorBoundary>
             <SceneSelector/>
