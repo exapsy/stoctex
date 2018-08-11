@@ -26,3 +26,4 @@ yarn.lock
 # to delete
 src/images
 .vscode
+package-lock.json

@@ -12,12 +12,12 @@ import './css/webflow.css';
 class App extends Component {
   render() {
     return (
-      <Provider listStore={new ListStore(ListStore.modes.PRODUCTS)}>
-        <div className="App">
-          <SceneSelector/>
-          <DevTools/>
-        </div>
-      </Provider>
+      <div className="App">
+        <Provider listStore={new ListStore(ListStore.modes.PRODUCTS)}>
+            <SceneSelector/>
+            <DevTools/>
+        </Provider>
+      </div>
     );
   }
 }

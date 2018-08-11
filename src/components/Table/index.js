@@ -112,10 +112,11 @@ export default class StoctexTable extends Component {
     _forEach(this.form, (field, key) => {
       field.value = '';
     });
-        // CALL EXTERNAL EVENT HANDLER
+
+    // CALL EXTERNAL EVENT HANDLER
     if(this.props.onItemAdd) {
       try {
-        this.props.onItemAdd(item);
+        await this.props.onItemAdd(item);
       }
       catch(e) {
         console.error(e.message);
@@ -125,7 +126,7 @@ export default class StoctexTable extends Component {
   }
 
   @action.bound
-  onItemRemove(event) {
+  async onItemRemove(event) {
     event.preventDefault();
     
     if(!this.confirmDimmer.active) {
@@ -146,7 +147,7 @@ export default class StoctexTable extends Component {
       // CALL EXTERNAL EVENT HANDLER IF EXISTS
       if(this.props.onItemRemove) {
         try {
-          this.props.onItemRemove(objectId);
+          await this.props.onItemRemove(objectId);
         }
         catch(e) {
           this.triggerMessage(e.response.data.errmsg, 'error');
@@ -156,7 +157,7 @@ export default class StoctexTable extends Component {
   }
 
   @action.bound
-  onItemUpdate(event) {
+  async onItemUpdate(event) {
     event.preventDefault();
 
     const idArray = event.currentTarget.id.split(',');
@@ -172,7 +173,7 @@ export default class StoctexTable extends Component {
 
     if(this.props.onItemUpdate) {
       try {
-        this.props.onItemUpdate(objectId, fieldName, newValue);
+        await this.props.onItemUpdate(objectId, fieldName, newValue);
       }
       catch(e) {
         this.triggerMessage(e.response.data.errmsg, 'error');
@@ -429,7 +430,7 @@ export default class StoctexTable extends Component {
 
           <Dimmer active={this.message.active} onClickOutside={handleHide}>
             <Header as='h1' color='red'>
-              Error
+              {this.message.type}
             </Header>
             <Header as='h2'>
               {this.message.text}
