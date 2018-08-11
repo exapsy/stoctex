@@ -9,14 +9,6 @@ import rest           from '../../config/rest';
 import './style.scss';
 
 export default class Main extends Component {
-  componentDidMount() {
-    // GET The list's product objects from the database
-    axios.get(rest.v1.products, { crossdomain: true })
-      .then(res => {
-        this.setState({products: res.data});
-    });
-  }
-
   render() {
     return (
       <div className='Main'>
