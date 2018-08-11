@@ -15,11 +15,7 @@ export default class MainContent extends Component {
   static defaultProps = {
     listStore: new ListStore(ListStore.modes.PRODUCTS)
   }
-
-  constructs() {
-    this.addItem = this.addItem.bind(this);
-  }
-
+  
   render() {
 
     // TABLE PROPERTIES FETCH
