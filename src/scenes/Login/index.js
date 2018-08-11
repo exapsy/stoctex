@@ -52,12 +52,6 @@ export default class Login extends Component {
                   value="Login" 
                   className="login-button w-button"/>
               </form>
-              <div className="w-form-done">
-                <div>Thank you! Your submission has been received!</div>
-              </div>
-              <div className="w-form-fail">
-                <div>Oops! Something went wrong while submitting the form.</div>
-              </div>
             </div>
             <div className="div-block">
               <p className="paragraph-2">Copyrights © GPSupplies 2018-2019</p>
