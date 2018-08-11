@@ -20,16 +20,6 @@ export default class MainContent extends Component {
     this.addItem = this.addItem.bind(this);
   }
 
-  componentDidMount() {
-    const { fetchItems } = this.props.listStore;
-
-    fetchItems()
-      .then(value => {
-        this.props.listStore.items = value;
-      })
-      .catch(err => { throw new Error(`Error while fetching items ${err}`)});
-  }
-
   render() {
 
     // TABLE PROPERTIES FETCH

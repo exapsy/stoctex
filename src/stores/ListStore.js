@@ -122,8 +122,12 @@ export default class ListStore {
 
     this.mode = mode;
 
-    this.addItemDb  = this.addItemDb.bind(this);
-    this.fetchItems = this.fetchItems.bind(this);
+    // Fetch items and set them to `items`
+    this.fetchItems()
+      .then(value => {
+        this.items = value;
+      })
+      .catch(err => { throw new Error(`Error while fetching items ${err}`)});
   }
 
   /** 
