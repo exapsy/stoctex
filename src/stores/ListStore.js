@@ -225,8 +225,6 @@ export default class ListStore {
 
     return new Promise((resolve, reject) => {
 
-      if(!this.mode) reject('List mode was not defined during item fetching');
-
       // API URL to make `post` request to
       const url = this.rest;
 
