@@ -3,6 +3,7 @@ import { Provider }         from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
 // LOCAL IMPORTS
+import ErrorBoundary from './components/ErrorBoundary';
 import SceneSelector from './scenes/SceneSelector';
 import ListStore from './stores/ListStore';
 import './semantic/dist/semantic.min.css';
@@ -14,8 +15,10 @@ class App extends Component {
     return (
       <div className="App">
         <Provider listStore={new ListStore(ListStore.modes.PRODUCTS)}>
+          <ErrorBoundary>
             <SceneSelector/>
             <DevTools/>
+          </ErrorBoundary>
         </Provider>
       </div>
     );
