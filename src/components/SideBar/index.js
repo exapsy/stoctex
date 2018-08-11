@@ -16,12 +16,16 @@ export default class SideBar extends Component {
   }
 
   componentDidMount() {
+    // Get user's displayName and initiate the displayName's state
     this.getUserDisplayName()
-      .then(value => {
-        this.setState({displayName: value});
-      });
+      .then(value => this.setState({displayName: value}))
+      .catch(err => { throw new Error('Error on getting user\'s display name')});
   }
 
+  /**
+   * Handler when the user pushes the Logout button
+   * @param {Event} event 
+   */
   handleLogout(event) {
     event.preventDefault();
     axios.get(
@@ -34,11 +38,14 @@ export default class SideBar extends Component {
         }
       }
     )
-      .then(value=> {
-        window.location.reload();
-      })
+      .then(value => window.location.reload())
+      .catch(err => { throw new Error('Could not logout'); });
   }
 
+  /**
+   * @async
+   * @returns {Promise<string>} HTML Markup for display name
+   */
   getUserDisplayName() {
     return new Promise((resolve, reject) => {
       axios.get(api.v1.auth.profile, 
@@ -50,11 +57,12 @@ export default class SideBar extends Component {
         } 
       })
         .then(value => {
-          if(!value.data) {
-            reject('Profile not existant');
-          }
-          const displayName = 
-            (
+
+          // If data is not undefined then return JSX with displayname in it
+          if(value.data) {
+
+            // User's display name
+            const displayName = (
               map(
                 value.data.displayName.split(' '),
                 (value, index) => {
@@ -64,13 +72,16 @@ export default class SideBar extends Component {
                       <br/>
                     </span>
                   )
-                })
-          );
-          resolve(displayName);
+              })
+            );
+
+            resolve(displayName);
+          } else {
+            reject('Profile not existant');
+          }
+          
         })
-        .catch(err => {
-          reject(err);
-        });
+        .catch(err => reject(err));
     });
   }
 

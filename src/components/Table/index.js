@@ -47,20 +47,24 @@ export default class StoctexTable extends Component {
     dataTypes: {}
   };
 
+  /** Form's Fields - To be used when adding new item */
   @observable form  = {};
+  /** Table's items to display */
   @observable items = [];
+  /** Message to show when something goes wrong - TODO: understand WTF IS THIS, should I remove it, since I have error boundaries */
   @observable message = {active: false, text: '', type: 'warning'};
+  /** Dimmer to be used to confirm of an item's removal when pushing the removeButton */
   @observable confirmDimmer = {active: false, confirmed: false, itemId: null};
 
   constructor(props) {
     super(props);
 
-    // COLUMN WIDTH INIT
+    // column width init
     if(props.totalColumns && !props.columnsWidth) {
       props.columnsWidth = new Array(props.totalColumns).fill(1);
     }
 
-    // FORM INIT
+    // form init
     if(props.itemAdd) {
       _forEach(props.headers, (header, key) => {
         this.form[key] = { value: '', error: null };
@@ -71,11 +75,16 @@ export default class StoctexTable extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    // If props changed, compute the new items
     if(prevProps !== this.props) {
       this.computeItems(this.props.items);
     }
   }
 
+  /**
+   * Update the form's field that have changed
+   * @param {Event} event 
+   */
   @action.bound
   onItemAdderFieldChange(event) {
     event.preventDefault();
@@ -87,15 +96,20 @@ export default class StoctexTable extends Component {
 
   }
 
+  /**
+   * Handler when the addItem button is clicked
+   * @param {Event} event 
+   */
   @action.bound
-  async onItemAdd(event) {
+  onItemAdd(event) {
     event.preventDefault();
     
+    // Item container
     let item = {};
 
-    // CREATING item FROM FORM
+    // Filling up the Item container with Form's fields
     _forEach(this.form, (field, key) => {
-
+      // If field is required and is not filled, then field is errored, else place the field's value in the item's container
       if(this.isFieldRequired(key) && !field.value) {
         field.error = true;
       }
@@ -105,82 +119,92 @@ export default class StoctexTable extends Component {
       }
     });
 
-    // IF AT LEAST ONE FIELD HAS ERROR
-    if(_find(this.form, {error: true})) return false;
+    // If at least one field has error, then skip this function
+    if(_find(this.form, {error: true})) return;
 
-    // CLEAR ALL FIELDS
+    // Clear the fields after filling the item's container
     _forEach(this.form, (field, key) => {
       field.value = '';
     });
 
-    // CALL EXTERNAL EVENT HANDLER
+    // Call props handler if existant, else does nothing
     if(this.props.onItemAdd) {
-      try {
-        await this.props.onItemAdd(item);
-      }
-      catch(e) {
-        console.error(e.message);
-        this.triggerMessage(e.response.data.errmsg, 'error');
-      }
+      this.props.onItemAdd(item)
+        .catch(err => this.triggerMessage(err.response.data.errmsg, 'error'));
     }
   }
 
+  /**
+   * Handler when the removeItem button is clicked
+   * @param {Event} event 
+   */
   @action.bound
   async onItemRemove(event) {
     event.preventDefault();
     
+    // If dimmer is not active, activate it and wait for user's confirmation of item's removal
     if(!this.confirmDimmer.active) {
       this.confirmDimmer.active = true;
       this.confirmDimmer.itemId = event.currentTarget.id;
     }
     else {
+      // Deactivate the dimmer, since if opened, then a button placed on the dimmer must have been pushed
       this.confirmDimmer.active = false;
       
+      // Get object id which was stored in the observable
       const objectId = this.confirmDimmer.itemId;
+      // Clear the object id from the observable
       this.confirmDimmer.itemId = null;
 
+      // If object id is not provided through the dimmer, it's a programmable error, thus not acceptable
       if(!objectId) {
-        console.error('No ObjectId was given for the item');
-        return;
+        throw new Error('objectId was not provided from the dimmer');
       }
 
-      // CALL EXTERNAL EVENT HANDLER IF EXISTS
+      // Call props handler if existant, else does nothing
       if(this.props.onItemRemove) {
-        try {
-          await this.props.onItemRemove(objectId);
-        }
-        catch(e) {
-          this.triggerMessage(e.response.data.errmsg, 'error');
-        }
+        this.props.onItemRemove(objectId)
+          .catch(err => this.triggerMessage(err.response.data.errmsg, 'error'));
       }
     }
   }
 
+  /**
+   * Handler when a modifiable field of a displayed item is changed
+   * @param {Event} event 
+   */
   @action.bound
-  async onItemUpdate(event) {
+  onItemUpdate(event) {
     event.preventDefault();
 
+    // Getting [objectId, fieldName] from the `id` property of the HTML object
     const idArray = event.currentTarget.id.split(',');
 
     const objectId  = idArray[0];
     const fieldName = idArray[1];
+
+    // The new value to store into item's field
     const newValue  = event.currentTarget.value;
 
+    // Find item by objectId
     const item = _find(this.items, { _id: objectId });
+    // Update item's field's value
     item[fieldName] = newValue
 
+    // Update the item, and thus the item's functions
     this.computeItems(this.items);
 
+    // Call props handler if existant, else does nothing
     if(this.props.onItemUpdate) {
-      try {
-        await this.props.onItemUpdate(objectId, fieldName, newValue);
-      }
-      catch(e) {
-        this.triggerMessage(e.response.data.errmsg, 'error');
-      }
+      this.props.onItemUpdate(objectId, fieldName, newValue)
+        .catch(err =>  this.triggerMessage(err.response.data.errmsg, 'error'));
     }
   }
 
+  /**
+   * Computes the `items` array of items returning to it the updated **functions** and **values**
+   * @param {[{fieldName: (string|number)}]} items The items to be computed
+   */
   @action 
   computeItems(items) {
     const { headers } = this.props;
@@ -204,6 +228,9 @@ export default class StoctexTable extends Component {
     });
   }
 
+  /**
+   * @returns {string} HTML Markup for Table Headers
+   */
   @computed
   get tableHeader() {
     if(!this.props.headers) return (null);
@@ -228,6 +255,9 @@ export default class StoctexTable extends Component {
     )
   }
 
+  /**
+   * @returns {string} HTML Markup for Table Item Adder form
+   */
   @computed
   get tableItemAdder() {
     if(!this.props.itemAdd) return (null);
@@ -285,6 +315,9 @@ export default class StoctexTable extends Component {
     );
   }
 
+  /**
+   * @returns {string} HTML Markup for Table Items
+   */
   @computed
   get tableItems() {
 
@@ -359,6 +392,11 @@ export default class StoctexTable extends Component {
 
   }
 
+  /**
+   * Provides the type of data that the field requires/returns
+   * @param {string} fieldName The field to check the data type for
+   * @returns {string} The type of the field
+   */
   getDataType(fieldName) {
 
     // GIVEN TYPE BY PROPS
@@ -375,12 +413,22 @@ export default class StoctexTable extends Component {
     return 'string';
   }
 
+  /**
+   * Checks whether a field is a function computed value or not
+   * @param {string} fieldName The field to check if its a function
+   * @returns {boolean} True if field is a function
+   */
   isFieldAFunction(fieldName) {
     return this.props.functions[fieldName] ?
       true
       : false;
   }
 
+  /**
+   * Checks whether or not a field is required
+   * @param {string} fieldName The field to check if its required
+   * @returns {boolean} True if field is required
+   */
   isFieldRequired(fieldName) {
     if(!this.props.requiredFields) return false;
 
@@ -389,6 +437,11 @@ export default class StoctexTable extends Component {
     return this.props.requiredFields[fieldName];
   }
 
+  /**
+   * Checks if a field is modifiable or not
+   * @param {string} fieldName The field to check if its modifiable
+   * @returns {boolean} True if field is modifiable
+   */
   isFieldModifiable(fieldName) {
     if(!this.props.modifiableFields) return false;
 
@@ -397,6 +450,11 @@ export default class StoctexTable extends Component {
     return this.props.modifiableFields[fieldName];
   }
 
+  /**
+   * Triggers a dimmer which displays the message provided
+   * @param {string} message The message to display to the dimmer
+   * @param {string} type 'Warning' for a warning message, 'Error' for an error type of message
+   */
   triggerMessage(message, type) {
     this.message.text   = message;
     this.message.active = true;

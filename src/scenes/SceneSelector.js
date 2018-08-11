@@ -53,7 +53,8 @@ export default class SceneSelector extends Component {
     return new Promise((resolve, reject) => {
       axios.get(
         api.v1.auth.isLoggedIn,
-        { withCredentials: true,
+        { 
+          withCredentials: true,
           
           headers: {
             "Access-Control-Allow-Origin":      '*',
@@ -80,6 +81,7 @@ export default class SceneSelector extends Component {
       </div>
     );
   }
+  
   render() {
     return (
         <div className='scene'>
