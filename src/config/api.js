@@ -1,4 +1,6 @@
 let base = '';
+
+// Set the base URL to the appropriate one, depending on the current Node Environment
 if(process.env.NODE_ENV === 'production') {
   base = 'https://gphub.gpsupplies.com'
 } else if(process.env.NODE_ENV === 'staging') {
