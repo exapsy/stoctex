@@ -10,6 +10,9 @@ import './semantic/dist/semantic.min.css';
 import './css/normalize.css';
 import './css/webflow.css';
 
+// GLOBAL VARIABLES
+require('dotenv').config();
+
 class App extends Component {
   render() {
     return (
