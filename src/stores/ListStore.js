@@ -83,7 +83,7 @@ export default class ListStore {
         cclit:   true,
         gp_k:    true
       },
-      api: api.v1.products
+      api: api.v1.http.products
     },
     customers: {
       headers: {
@@ -99,7 +99,7 @@ export default class ListStore {
         address: 'Address',
         zip: 'ZIP'
       },
-      api: api.v1.customers
+      api: api.v1.http.customers
     },
     couriers: {
       headers: {
@@ -107,7 +107,7 @@ export default class ListStore {
         email: 'Email', 
         phone: 'Phone'
       },
-      api: api.v1.couriers
+      api: api.v1.http.couriers
     }
   });
 

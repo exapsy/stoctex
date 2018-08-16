@@ -29,7 +29,7 @@ export default class SideBar extends Component {
   handleLogout(event) {
     event.preventDefault();
     axios.get(
-      api.v1.auth.logout,
+      api.v1.http.auth.logout,
       {
         withCredentials: true,
         headers: {
@@ -48,7 +48,7 @@ export default class SideBar extends Component {
    */
   getUserDisplayName() {
     return new Promise((resolve, reject) => {
-      axios.get(api.v1.auth.profile, 
+      axios.get(api.v1.http.auth.profile, 
         {
         withCredentials: true, 
         headers: {

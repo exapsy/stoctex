@@ -12,28 +12,28 @@ if(process.env.NODE_ENV === 'production') {
 export default {
   'v1': {
     'http': {
-      'customers' : base + '/api/v1/customers',
-      'products'  : base + '/api/v1/products',
-      'couriers'  : base + '/api/v1/couriers',
-      'users'     : base + '/api/v1/users',
+      'customers' : base + '/v1/customers',
+      'products'  : base + '/v1/products',
+      'couriers'  : base + '/v1/couriers',
+      'users'     : base + '/v1/users',
       'auth' : 
       {
-        'isLoggedIn' : base + '/api/v1/isLoggedIn',
-        'login'      : base + '/api/v1/login',
-        'logout'     : base + '/api/v1/logout',
-        'profile'    : base + '/api/v1/profile'
+        'isLoggedIn' : base + '/v1/isLoggedIn',
+        'login'      : base + '/v1/login',
+        'logout'     : base + '/v1/logout',
+        'profile'    : base + '/v1/profile'
       }
     },
     'socket': {
       'users' : {
-        'url' : base + '/api/v1/stoctex/users',
+        'url'    : base + '/v1/stoctex/users',
         'events' : {
           'userJoined' : 'userJoined',
           'userLeft'   : 'userLeft'
         }
       },
       'table' : {
-        'url' : base + '/api/v1/stoctex/table',
+        'url'    : base + '/v1/stoctex/table',
         'events' : {
           'tableFieldChanged' : 'tableFieldChanged',
           'tableItemAdded'    : 'tableItemAdded',

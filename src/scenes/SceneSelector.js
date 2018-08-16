@@ -25,7 +25,7 @@ export default class SceneSelector extends Component {
     this.setState({isLoading: true});
 
     await axios.post(
-      api.v1.auth.login,
+      api.v1.http.auth.login,
       userData,
       { withCredentials: true,
         headers: {
@@ -52,7 +52,7 @@ export default class SceneSelector extends Component {
     
     return new Promise((resolve, reject) => {
       axios.get(
-        api.v1.auth.isLoggedIn,
+        api.v1.http.auth.isLoggedIn,
         { 
           withCredentials: true,
           
