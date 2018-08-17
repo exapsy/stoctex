@@ -24,17 +24,29 @@ export default class ErrorBoundary extends Component {
   }
 
   render() {
+    // Style for ErrorBoundary div
+    const errorBoundaryStyle = {
+      width: '50%',
+      margin: 'auto',
+      marginTop: '32px',
+      background: 'linearGradient(0, #AA4444, #CC8877)',
+    };
+
     // If an error was catched then render an Error Block instead of Children
     if(this.state.hasError) {
       return (
-        <div className='errorBoundary'>
+        <div className='errorBoundary' style={errorBoundaryStyle}>
           <h1>Something went wrong</h1>
-          <p>Error - {this.state.error}</p>
-          <p>Occured at {this.state.info.componentStack}</p>
+          <h3>Error</h3>
+          <p className='errorMessage'>{this.state.error.message}</p>
         </div>
       );
-    } else {
-      return this.props.children;
     }
+    return (
+      <div className='errorBoundary'>
+        {this.props.children}
+      </div>
+    )
+    
   }
 }

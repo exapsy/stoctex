@@ -17,7 +17,6 @@
 @element : 'table';
 
 @import (multiple) '../../theme.config';
-@import url('https://fonts.googleapis.com/css?family=Montserrat:500,700');
 
 /*******************************
              Table
@@ -65,10 +64,8 @@
   color: @headerColor;
   padding: @headerVerticalPadding @headerHorizontalPadding;
   vertical-align: @headerVerticalAlign;
-  // font-style: @headerFontStyle;
-  // font-weight: @headerFontWeight;
-  font-family: 'Montserrat', sans-serif;  // Modified
-  font-weight: 700; // Modified
+  font-style: @headerFontStyle;
+  font-weight: @headerFontWeight;
   text-transform: @headerTextTransform;
   border-bottom: @headerBorder;
   border-left: @headerDivider;
@@ -134,28 +131,6 @@
 .ui.table td {
   padding: @cellVerticalPadding @cellHorizontalPadding;
   text-align: @cellTextAlign;
-}
-// (Custom) Selection
-.ui.table .ui.input > input {
-  font-family: 'Montserrat', sans-serif;
-  border-width: 0px !important;
-  background-color: transparent !important;
-  transition: background-color 0.3s;
-}
-// (Custom) Selection
-.ui.table .ui.input > input:focus:hover {
-  background-color: #ffffffa0 !important;
-  transition: background-color 0.3s;
-}
-// (Custom) Selection
-.ui.table .ui.input > input:focus {
-  background-color: #ffffffa0 !important;
-  transition: background-color 0.3s;
-}
-// (Custom) Selection
-.ui.table .ui.input > input:hover {
-  background-color: #d2d2d8 !important;
-  transition: background-color 0.3s;
 }
 
 /* Icons */

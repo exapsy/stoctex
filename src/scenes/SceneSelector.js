@@ -17,7 +17,12 @@ export default class SceneSelector extends Component {
     this.getScene          = this.getScene.bind(this);
     this.handleLoginSubmit = this.handleLoginSubmit.bind(this);
 
-    this.state = {isLoading: true, isLoggedIn: false};
+    this.state = {
+      isLoading: true, 
+      isLoggedIn: false,
+      hasError: false,
+      error: null
+    };
   }
 
   async handleLoginSubmit(userData) {
@@ -27,25 +32,33 @@ export default class SceneSelector extends Component {
     await axios.post(
       api.v1.http.auth.login,
       userData,
-      { withCredentials: true,
-        headers: {
+      { 
+        withCredentials: true,
+        headers: 
+        {
           "Access-Control-Allow-Origin": 'https://localhost:8000',
         }
       }
-    ).then(value => {
+    )
+    .then(value => {
       this.setState({userData: value.data, isLoggedIn: value ? true : false, isLoading: false});
-    });
+    })
+    .catch(err => { this.triggerError(`Error on login request ${err.message}`) });
+    //console.log('Error on login request', err)
   }
   
   componentDidMount() {
-    this.login();
+    
   }
 
-  login() {
+  async login() {
+    let err = false;
     this.isLoggedIn()
     .then(value => {
       this.setState({isLoggedIn: value, isLoading: false})
-    });
+    })
+    .catch(err => { this.triggerError(`Error on checking if logged in : ${err.message}`) });
+    //console.log('Error on checking if logged in', err)
   }
 
   isLoggedIn() {
@@ -61,7 +74,8 @@ export default class SceneSelector extends Component {
             "Access-Control-Allow-Credentials": true
           }
         }
-      ).then(value => {
+      )
+      .then(value => {
         resolve(value.data);
       })
       .catch(err => {
@@ -71,26 +85,40 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
+    this.login();
     const scene = this.state.isLoggedIn ? 
-      <Main/> 
-      : <Login onSubmit={this.handleLoginSubmit}/>;
-    
+    <Main/> :
+    <Login onSubmit={this.handleLoginSubmit}/>;
+  
     return (
       <div>
           {scene}
       </div>
     );
   }
+
+  triggerError(error) {
+    this.setState({
+      hasError : true,
+      error: error.message ?
+        error.message :
+        error
+    });
+  }
+
   
   render() {
-    return (
-        <div className='scene'>
-          {this.getScene()}
+    if(this.state.hasError) throw new Error(this.state.error);
 
-          <Dimmer active={this.state.isLoading}>
-            <Loader/>
-          </Dimmer>
-        </div>
+    return (
+      <div className='scene'>
+      
+        {this.getScene()}
+
+        <Dimmer active={this.state.isLoading}>
+          <Loader/>
+        </Dimmer>
+      </div>
     )
   }
 }

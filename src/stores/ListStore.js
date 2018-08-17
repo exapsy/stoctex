@@ -3,6 +3,7 @@ import {
   computed, 
   action, 
   observable,
+  reaction,
 }               from 'mobx';
 import axios    from 'axios';
 import _includes from 'lodash/includes';
@@ -25,6 +26,16 @@ export default class ListStore {
 
   /** Provides an enumerable from 'modes' freezed variable, which describes what type of items the ListStore provides */
   @observable mode;
+
+  /** Error Catch for ErrorBoundary parent component */
+  @observable errorBoundary = {
+    hasError : false,
+    error    : null
+  };
+  errorReaction = reaction(
+    () => this.errorBoundary,
+    (hasError, error) => { if(hasError) throw new Error(error); }
+  );
 
   /** Enumerable for 'mode' variable, describes the type of 'items' provided by the database */
   static modes = Object.freeze({
@@ -118,7 +129,7 @@ export default class ListStore {
    */
   constructor(mode) {
     // If mode not included in enumerable 'modes', it's an error
-    if(!_includes(ListStore.modes, mode)) throw new Error('Selected Mode does not exist');
+    if(!_includes(ListStore.modes, mode)) this._triggerError('Selected Mode does not exist');
 
     this.mode = mode;
 
@@ -127,7 +138,7 @@ export default class ListStore {
       .then(value => {
         this.items = value;
       })
-      .catch(err => { throw new Error(`Error while fetching items ${err}`)});
+      .catch(err => { this._triggerError(`Error while fetching items ${err}`)});
   }
 
   /** 
@@ -136,7 +147,7 @@ export default class ListStore {
    */
   @computed get headers() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].headers;
   }
@@ -147,7 +158,7 @@ export default class ListStore {
    */
   @computed get totalColumns() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].totalColumns;
   }
@@ -158,7 +169,7 @@ export default class ListStore {
    */
   @computed get columnsWidth() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].columnsWidth;
   }
@@ -169,7 +180,7 @@ export default class ListStore {
    */
   @computed get functions() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].functions;
   }
@@ -180,7 +191,7 @@ export default class ListStore {
    */
   @computed get dataTypes() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].dataTypes;
   }
@@ -191,7 +202,7 @@ export default class ListStore {
    */
   @computed get requiredFields() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].requiredFields;
   }
@@ -203,7 +214,7 @@ export default class ListStore {
    */
   @computed get modifiableFields() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].modifiableFields;
   }
@@ -214,7 +225,7 @@ export default class ListStore {
    */
   @computed get api() {
     // Mode must be defined
-    if(!this.mode) throw new Error('List mode was not defined during item fetching');
+    if(!this.mode) console.log('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].api;
   }
@@ -378,6 +389,12 @@ export default class ListStore {
     return _filter(headerKeys, (header) => {
       return !this.isFieldFunction(header);
     });
+  }
+
+  @action
+  _triggerError(error) {
+    this.errorBoundary.hasError = true;
+    this.errorBoundary.error = error;
   }
 
   /**
