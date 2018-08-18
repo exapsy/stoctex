@@ -501,7 +501,7 @@ export default class StoctexTable extends Component {
               <Header icon='message' content='Remove Item' />
               <Modal.Content>
                 <p>
-                  You sure want to remove the Item?
+                  Are you sure you want to remove this item?
                 </p>
               </Modal.Content>
               <Modal.Actions>
