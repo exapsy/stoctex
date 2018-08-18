@@ -10,7 +10,6 @@ export default class Search extends Component {
   constructor(props) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -44,7 +43,7 @@ export default class Search extends Component {
 
   render() {
     return (
-      <form action="/search" className="search w-form" onSubmit={this.handleSubmit}>
+      <form action="/search" className="search w-form">
         <input 
           type="search" 
           className="search-input w-input" 

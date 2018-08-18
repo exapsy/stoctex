@@ -48,7 +48,7 @@ export default class SceneSelector extends Component {
   }
   
   componentDidMount() {
-    
+    this.login();
   }
 
   async login() {
@@ -67,7 +67,12 @@ export default class SceneSelector extends Component {
       axios.get(
         api.v1.http.auth.isLoggedIn,
         { 
+          // withCredentials: true,
           
+          // headers: {
+          //   "Access-Control-Allow-Origin":      '*',
+          //   "Access-Control-Allow-Credentials": true
+          // }
         }
       )
       .then(value => {
@@ -80,7 +85,6 @@ export default class SceneSelector extends Component {
   }
 
   getScene() {
-    this.login();
     const scene = this.state.isLoggedIn ? 
     <Main/> :
     <Login onSubmit={this.handleLoginSubmit}/>;
