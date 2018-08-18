@@ -11,7 +11,14 @@ import './style.scss'
 export default class SideBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {displayName: 'Username'};
+
+    this.state = {
+      displayName: 'Username',
+      isLoggedIn: false,
+      hasError: false,
+      error: null
+    };
+
     this.handleLogout = this.handleLogout.bind(this);
   }
 
@@ -19,7 +26,8 @@ export default class SideBar extends Component {
     // Get user's displayName and initiate the displayName's state
     this.getUserDisplayName()
       .then(value => this.setState({displayName: value}))
-      .catch(err => { throw new Error('Error on getting user\'s display name')});
+      .catch(err => { this.triggerError(`Error on getting user\'s display name : ${err}`)});
+
   }
 
   /**
@@ -39,7 +47,7 @@ export default class SideBar extends Component {
       }
     )
       .then(value => window.location.reload())
-      .catch(err => { throw new Error('Could not logout'); });
+      .catch(err => { this.triggerError('Could not logout'); });
   }
 
   /**
@@ -85,9 +93,22 @@ export default class SideBar extends Component {
     });
   }
 
+  triggerError(error) {
+    this.setState({
+      hasError : true,
+      error: error.message ?
+        error.message :
+        error
+    });
+  }
+
+
   render() {
     // TODO: check wtf has happened here
     // let displayName = this.getUserDisplayName();
+
+    if(this.state.hasError) throw new Error(this.state.error);
+
     return (
       <div className="sidebar w-col w-col-2">
         <div className="logo">
