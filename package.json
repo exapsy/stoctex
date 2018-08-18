@@ -62,8 +62,8 @@
     "whatwg-fetch": "2.0.3"
   },
   "engines": {
-    "node": "9.6.1",
-    "npm": "5.6.0"
+    "node": ">=9.6.1",
+    "npm": ">=5.6.0"
   },
   "homepage": "https://stoctex.gpsupplies.gr",
   "scripts": {
