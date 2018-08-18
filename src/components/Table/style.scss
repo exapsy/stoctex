@@ -75,12 +75,25 @@ $itemRow_unmodifiable_textAlign:         left;
   overflow: visible !important;
 }
 
-.table tr td.buttonCell .ui .input {
+.table tr td .ui.input {
   width: 100%;
   height: 100%;
 }
 
-.table tr td .buttonCell .ui .input input {
+.table tr td .ui.input input {
+  width: 100%;
   padding-top: 14px;
   padding-bottom: 14px;
+  border: 0;
+  background-color: #1b1b1b05;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+  transition-property: background-color;
+}
+
+.table tr td .ui.input input:hover {
+  background-color: #f5f5fa25;
+  transition-timing-function: ease-in-out;
+  transition-duration: 200ms;
+  transition-property: background-color;
 }
