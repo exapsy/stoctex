@@ -9,7 +9,8 @@ import './style.scss';
 export default class Search extends Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    
+    this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
   componentDidMount() {
@@ -21,10 +22,10 @@ export default class Search extends Component {
    * Handler when the Search Textbox changes - Updates the table's items
    * @param {Event} event 
    */
-  handleChange(event) {
+  handleSearchChange(event) {
     // Escape function to remove any escape characters from the user's string - BUG prevention    
     RegExp.escape = function(string) {
-      return string.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')
+      return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
     };
 
     // Regex object
@@ -50,7 +51,9 @@ export default class Search extends Component {
           maxLength="256" name="query" 
           placeholder="Search…" 
           id="search" 
-          required=""/>
+          required=""
+          onChange={this.handleSearchChange}
+          />
       </form>
     )
   }
