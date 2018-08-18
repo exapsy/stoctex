@@ -56,6 +56,9 @@ export default class ErrorBoundary extends Component {
           <p className='errorMessage' style={errorMessageStyle}>
             {this.state.error.message}
           </p>
+          <p>
+            Contact with the administrator developer +31-6975 362321 - apostolis.anastasiou.alpha@gmail.com
+          </p>
         </div>
       );
     }
