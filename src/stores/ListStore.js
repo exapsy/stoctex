@@ -129,7 +129,7 @@ export default class ListStore {
    */
   constructor(mode) {
     // If mode not included in enumerable 'modes', it's an error
-    if(!_includes(ListStore.modes, mode)) this._triggerError('Selected Mode does not exist');
+    if(!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
 
     this.mode = mode;
 
@@ -138,7 +138,7 @@ export default class ListStore {
       .then(value => {
         this.items = value;
       })
-      .catch(err => { this._triggerError(`Error while fetching items ${err}`)});
+      .catch(err => { this.triggerError(`Error while fetching items ${err}`)});
   }
 
   /** 
@@ -147,7 +147,7 @@ export default class ListStore {
    */
   @computed get headers() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].headers;
   }
@@ -158,7 +158,7 @@ export default class ListStore {
    */
   @computed get totalColumns() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].totalColumns;
   }
@@ -169,7 +169,7 @@ export default class ListStore {
    */
   @computed get columnsWidth() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].columnsWidth;
   }
@@ -180,7 +180,7 @@ export default class ListStore {
    */
   @computed get functions() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].functions;
   }
@@ -191,7 +191,7 @@ export default class ListStore {
    */
   @computed get dataTypes() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].dataTypes;
   }
@@ -202,7 +202,7 @@ export default class ListStore {
    */
   @computed get requiredFields() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].requiredFields;
   }
@@ -214,7 +214,7 @@ export default class ListStore {
    */
   @computed get modifiableFields() {
     // Mode must be defined
-    if(!this.mode) this._triggerError('List mode was not defined during item fetching');
+    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].modifiableFields;
   }
@@ -392,7 +392,7 @@ export default class ListStore {
   }
 
   @action
-  _triggerError(error) {
+  triggerError(error) {
     this.errorBoundary.hasError = true;
     this.errorBoundary.error = error;
   }
