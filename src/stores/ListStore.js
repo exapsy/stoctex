@@ -282,7 +282,7 @@ export default class ListStore {
               .then(
                 action('addItemDb.fetchItems.success', 
                 (fetchedItems) => {
-                  this.items = fetchedItems
+                  this.items = fetchedItems;
                   resolve(fetchedItems);
               }))
               .catch(
@@ -314,24 +314,27 @@ export default class ListStore {
       const url = `${this.api}/${itemId}`;
 
       // API delete Request
-      axios.delete(url)
+      axios.delete(
+        url,
+        {withCredentials: true}
+      )
         .then(value => {
           this.fetchItems()
-            .then(
-              action('removeItemDb.fetchItems.success'),
-              (fetchedItems) => {
-                this.items = fetchedItems
-                resolve(fetchedItems);
-            })
+              .then(
+                action('removeItemDb.fetchItems.success', 
+                (fetchedItems) => {
+                  this.items = fetchedItems;
+                  resolve(fetchedItems);
+              }))
             .catch(
-              action('removeItemDb.fetchItems.failure'),
+              action('removeItemDb.fetchItems.failure',
               err => reject(err)
-            );
+            ));
         })
         .catch(
-          action('removeItemDb.failure'),
+          action('removeItemDb.failure',
           err => reject(err)
-        );
+        ));
     });
   }
 

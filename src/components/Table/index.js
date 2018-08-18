@@ -130,7 +130,10 @@ export default class StoctexTable extends Component {
     // Call props handler if existant, else does nothing
     if(this.props.onItemAdd) {
       this.props.onItemAdd(item)
-        .catch(err => this.triggerMessage(err.response.data.errmsg, 'error'));
+        .catch(err => {
+          console.log('Error', err.response.data);
+          this.triggerMessage(err.response.data.errmsg, 'error')
+        });
     }
   }
 
@@ -461,6 +464,11 @@ export default class StoctexTable extends Component {
     this.message.type   = type;
   }
 
+  @action.bound
+  handleHideDimmer(event) {
+    this.message.active = false;
+  }
+
   render() {
     const { totalColumns } = this.props;
 
@@ -471,26 +479,22 @@ export default class StoctexTable extends Component {
       columns: totalColumns
     }
 
-    const handleHide = function() {
-      this.error.active = false;
-    };
-
     return (
       <div className='table'>
         <Dimmer.Dimmable dimmed={this.message.active} blurring>
           <Table {...tableProps}>
             {this.tableHeader}
-            <Transition.Group as={Table.Body} animation='browse' duration={500}>
+            <Transition.Group as={Table.Body} animation='fade left' duration={200}>
               {this.tableItemAdder}
               {this.tableItems}
             </Transition.Group>
           </Table>
 
-          <Dimmer active={this.message.active} onClickOutside={handleHide}>
+          <Dimmer active={this.message.active} onClickOutside={this.handleHideDimmer}>
             <Header as='h1' color='red'>
-              {this.message.type}
+              {this.message.type.toUpperCase()}
             </Header>
-            <Header as='h2'>
+            <Header as='h2' style={{color: '#f1f1f8'}}>
               {this.message.text}
             </Header>
           </Dimmer>
