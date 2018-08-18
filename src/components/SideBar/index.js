@@ -26,7 +26,7 @@ export default class SideBar extends Component {
     // Get user's displayName and initiate the displayName's state
     this.getUserDisplayName()
       .then(value => this.setState({displayName: value}))
-      .catch(err => { this.triggerError(`Error on getting user\'s display name : ${err}`)});
+      .catch(err => this.triggerError(`Couldn't get display name : ${err}`));
 
   }
 
@@ -47,7 +47,7 @@ export default class SideBar extends Component {
       }
     )
       .then(value => window.location.reload())
-      .catch(err => { this.triggerError('Could not logout'); });
+      .catch(err => this.triggerError(`Could not logout : ${err}`));
   }
 
   /**
@@ -58,12 +58,13 @@ export default class SideBar extends Component {
     return new Promise((resolve, reject) => {
       axios.get(api.v1.http.auth.profile, 
         {
-        withCredentials: true, 
-        headers: {
-          "Access-Control-Allow-Origin":      '*',
-          "Access-Control-Allow-Credentials": true
-        } 
-      })
+          withCredentials: true, 
+          headers: {
+            "Access-Control-Allow-Origin":      '*',
+            "Access-Control-Allow-Credentials": true
+          } 
+        }
+      )
         .then(value => {
 
           // If data is not undefined then return JSX with displayname in it
@@ -85,7 +86,7 @@ export default class SideBar extends Component {
 
             resolve(displayName);
           } else {
-            reject('Profile not existant');
+            reject('Profile not existant or a CORS issue appeared');
           }
           
         })
@@ -107,6 +108,7 @@ export default class SideBar extends Component {
     // TODO: check wtf has happened here
     // let displayName = this.getUserDisplayName();
 
+    // Throw error in case the state is in error mode
     if(this.state.hasError) throw new Error(this.state.error);
 
     return (
