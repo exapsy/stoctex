@@ -69,7 +69,7 @@
   "scripts": {
     "build-semantic": "cd src/semantic && gulp build-css build-assets",
     "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
-    "start": "npm run build-semantic && node scripts/start.js",
+    "start": "node scripts/start.js",
     "build": "npm run build-semantic && node scripts/build.js",
     "dev": "npm run build-semantic && node scripts/start.js",
     "test": "node scripts/test.js --env=jsdom",
