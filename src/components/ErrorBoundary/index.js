@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import {
+  Dimmer
+}                           from 'semantic-ui-react';
 
 /**
  * Renders an Error Block which describes the error if an error was catched
@@ -30,7 +33,7 @@ export default class ErrorBoundary extends Component {
       margin: 'auto',
       marginTop: '32px',
       padding: '64px',
-      backgroundImage: 'linear-gradient(0deg, #1B1B1B, #242124)',
+      // backgroundImage: 'linear-gradient(0deg, #1B1B1B, #242124)',
       borderRadius: '12px'
     };
 
@@ -47,26 +50,29 @@ export default class ErrorBoundary extends Component {
       fontFamily: 'monospace'
     };
 
+    const errorMessage = this.state.error ? 
+      this.state.error.message :
+      null;
+
     // If an error was catched then render an Error Block instead of Children
-    if(this.state.hasError) {
-      return (
-        <div className='errorBoundary' style={errorBoundaryStyle}>
+    return (
+      <div className='errorBoundary'>
+        <div className='errorBoundary'>
+          {this.props.children}
+        </div>
+        <Dimmer active={this.state.hasError}>
+          <div className='errorBoundary' style={errorBoundaryStyle}>
           <h1 style={h1Style}>Something went wrong</h1>
           <h3 style={{color: '#ED2939'}}>Error</h3>
           <p className='errorMessage' style={errorMessageStyle}>
-            {this.state.error.message}
+            {errorMessage}
           </p>
           <p>
             Contact with the administrator developer +31-6975 362321 - apostolis.anastasiou.alpha@gmail.com
           </p>
         </div>
-      );
-    }
-    return (
-      <div className='errorBoundary'>
-        {this.props.children}
+        </Dimmer>
       </div>
-    )
-    
+    );
   }
 }
