@@ -48,7 +48,9 @@ export default class SceneSelector extends Component {
   }
   
   componentDidMount() {
-    this.login();
+    if(!this.state.hasError){
+      this.login();
+    }
   }
 
   async login() {
@@ -113,7 +115,7 @@ export default class SceneSelector extends Component {
       
         {this.getScene()}
 
-        <Dimmer active={this.state.isLoading}>
+        <Dimmer active={this.state.isLoading && !this.state.hasError}>
           <Loader/>
         </Dimmer>
       </div>
