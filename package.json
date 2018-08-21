@@ -72,6 +72,7 @@
     "start": "node scripts/start.js",
     "build": "npm run build-semantic && node scripts/build.js",
     "dev": "npm run build-semantic && node scripts/start.js",
+    "prod": "npm run build && serve -s build -l 3002",
     "test": "node scripts/test.js --env=jsdom",
     "heroku-postbuild": "npm install && npm run build"
   },
