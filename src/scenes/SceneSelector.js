@@ -1,15 +1,28 @@
+/**
+ * Scene Selector to pick the appropriate scene for the application
+ * 
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import axios                from  'axios';
 import {
   Dimmer,
   Loader
 }                           from 'semantic-ui-react';
-
-// LOCAL IMPORTS
 import Login from './Login';
 import Main  from './Main';
 import api from '../config/api';
 
+/**
+ * Picks the most appropriate scene to show depending on the Application's state
+ * If not logged in picks the Login scenery,
+ * Else selects the Main Application's content to be shown
+ *
+ * @export
+ * @class SceneSelector
+ * @extends {Component}
+ */
 export default class SceneSelector extends Component {
   constructor(props) {
     super(props);
@@ -25,6 +38,13 @@ export default class SceneSelector extends Component {
     };
   }
 
+  /**
+   * Handler for the Login button in the Login Scene
+   * Depending on the success of the login request, the state of the component ought to be changed
+   *
+   * @param {{username: string, password: string}} userData
+   * @memberof SceneSelector
+   */
   async handleLoginSubmit(userData) {
     
     this.setState({isLoading: true});
@@ -47,12 +67,26 @@ export default class SceneSelector extends Component {
     //console.log('Error on login request', err)
   }
   
+  /**
+   *
+   *
+   * @memberof SceneSelector
+   */
   componentDidMount() {
     if(!this.state.hasError){
       this.login();
     }
   }
 
+  /**
+   * Attempts to login with the current cookies on the client's side
+   * If login is a success, then the components state changes to logged in
+   * 
+   * In any circumances, after the request has finished and no exception was thrown,
+   *  the loading is deactivated allowing the user to enter his credentials
+   *
+   * @memberof SceneSelector
+   */
   async login() {
     this.isLoggedIn()
     .then(value => {
@@ -62,6 +96,12 @@ export default class SceneSelector extends Component {
     //console.log('Error on checking if logged in', err)
   }
 
+  /**
+   * Checks if the user is currently logged in by making a request to the GPHub API
+   *
+   * @returns
+   * @memberof SceneSelector
+   */
   isLoggedIn() {
     
     return new Promise((resolve, reject) => {
@@ -85,6 +125,12 @@ export default class SceneSelector extends Component {
     });
   }
 
+  /**
+   * Picks the most appropriate scene depending on if the user is logged in or not
+   *
+   * @returns
+   * @memberof SceneSelector
+   */
   getScene() {
     const scene = this.state.isLoggedIn ? 
     <Main/> :
@@ -97,6 +143,12 @@ export default class SceneSelector extends Component {
     );
   }
 
+  /**
+   * Changes the component's error state to active
+   *
+   * @param {string} error
+   * @memberof SceneSelector
+   */
   triggerError(error) {
     this.setState({
       hasError : true,
@@ -106,7 +158,12 @@ export default class SceneSelector extends Component {
     });
   }
 
-  
+  /**
+   * Renders the most appropriate component depending on the login state
+   *
+   * @returns
+   * @memberof SceneSelector
+   */
   render() {
     if(this.state.hasError) throw new Error(this.state.error);
 

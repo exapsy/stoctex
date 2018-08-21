@@ -1,11 +1,21 @@
-// APIS & LIBRARIES
-import React, { Component } from 'react';
+/**
+ * Container of the Main Scene of the application
+ * 
+ */
 
-// LOCAL IMPORTS
+// Dependencies
+import React, { Component } from 'react';
 import MainContent  from './MainContent';
 import SideBar        from '../../components/SideBar';
 import './style.scss';
 
+/**
+ * Exports the Primary content of the Application
+ *
+ * @export
+ * @class Main
+ * @extends {Component}
+ */
 export default class Main extends Component {
   render() {
     return (

@@ -1,4 +1,12 @@
-// APIs & LIBRARIES
+/**
+ * Store for a list of items to provide to other components (Like #Table)
+ * Provides different kind of services, 
+ * like item refresher to refetch items from the database, 
+ * item adder to add an item in the database and other such capabilities
+ * 
+ */
+
+// Dependencies
 import { 
   computed, 
   action, 
@@ -9,8 +17,6 @@ import axios    from 'axios';
 import _includes from 'lodash/includes';
 import _filter   from 'lodash/filter';
 import _reduce   from 'lodash/reduce';
-
-// LOCAL IMPORTS
 import api from '../config/api';
 
 /**
@@ -126,6 +132,7 @@ export default class ListStore {
   /**
    * 
    * @param {string} mode The type of model for the list to retrieve
+   * @memberof ListStore
    */
   constructor(mode) {
     // If mode not included in enumerable 'modes', it's an error
@@ -144,6 +151,7 @@ export default class ListStore {
   /** 
    * An object describing what the header for each field should be with the keys provided respectively for each field
    * @returns {{fieldName: string}}
+   * @memberof ListStore
    */
   @computed get headers() {
     // Mode must be defined
@@ -155,6 +163,7 @@ export default class ListStore {
   /** 
    * A Table shall have a total amount of columns, usually depending on the amount of headers
    * @returns {number} Amount of columns
+   * @memberof ListStore
    */
   @computed get totalColumns() {
     // Mode must be defined
@@ -166,6 +175,7 @@ export default class ListStore {
   /**
    * The width of each column, so each column takes as much screen space as we'd like
    * @returns {Array.<number>)}
+   * @memberof ListStore
    */
   @computed get columnsWidth() {
     // Mode must be defined
@@ -177,6 +187,7 @@ export default class ListStore {
   /** 
    * Some columns may be computed by other fields or other factors
    * @returns {{fieldName: function}}
+   * @memberof ListStore
    */
   @computed get functions() {
     // Mode must be defined
@@ -199,6 +210,7 @@ export default class ListStore {
   /**
    * Some fields may be required for an item and others may not
    * @returns {{fieldName: boolean}}
+   * @memberof ListStore
    */
   @computed get requiredFields() {
     // Mode must be defined
@@ -211,6 +223,7 @@ export default class ListStore {
   /**
    * Which fields of an item to be editable for the user to modify
    * @returns {{fieldName: boolean}}
+   * @memberof ListStore
    */
   @computed get modifiableFields() {
     // Mode must be defined
@@ -222,6 +235,7 @@ export default class ListStore {
   /** 
    * Provides the API url depending on the current 'mode' - See: 'modes' enumerable
    * @returns {string} The URL that corresponds to the current mode
+   * @memberof ListStore
    */
   @computed get api() {
     // Mode must be defined
@@ -250,6 +264,7 @@ export default class ListStore {
    * Fetches and returns the items for the current mode from the API
    * @async
    * @returns {Promise<[{fieldName: any}]>}
+   * @memberof ListStore
    */
   @action
   fetchItems() {
@@ -275,6 +290,7 @@ export default class ListStore {
    * @async
    * @param {{fieldName: any}} item 
    * @returns {Promise<[{fieldName: any}]}
+   * @memberof ListStore
    */
   @action.bound
   addItemDb(item) {
@@ -318,6 +334,7 @@ export default class ListStore {
    * @async
    * @param {string} itemId The id of the item to remove
    * @returns {Promise<[{fieldName: any}]}
+   * @memberof ListStore
    */
   @action.bound
   removeItemDb(itemId) {
@@ -362,6 +379,7 @@ export default class ListStore {
    * @param {string} fieldName The name of the field of the item to update
    * @param {string|number} newValue The new value to be stored to the item's choosen field
    * @returns {Promise<[{fieldName: any}]} Fetched items
+   * @memberof ListStore
    */
   @action.bound
   updateItemDb(itemId, fieldName, newValue) {
@@ -391,6 +409,7 @@ export default class ListStore {
   /**
    * Filters the `items` object with the `itemFilterCallback` observable function
    * @returns {[{fieldName: (string|number)}]} Filtered Items
+   * @memberof ListStore
    */
   @computed get filteredItems() {
     return _filter(this.items, this.itemFilterCallback);
@@ -399,6 +418,7 @@ export default class ListStore {
   /**
    * Provides all the item's keys without the functions
    * @returns {Array.<string>} Key names
+   * @memberof ListStore
    */
   @computed get objectKeys() {
     // Current mode's item's keys
@@ -410,6 +430,12 @@ export default class ListStore {
     });
   }
 
+  /**
+   * Changes the class' error state to active
+   *
+   * @param {*} error The error to be triggered
+   * @memberof ListStore
+   */
   @action
   triggerError(error) {
     this.errorBoundary.hasError = true;
@@ -420,6 +446,7 @@ export default class ListStore {
    * A Function which is provided for a specific field
    * Currently exists in `Products` items with the key of `total`
    * @param {Array.<number>} array 
+   * @memberof ListStore
    */
   sum(array) {
     // Summing up all the numbers, type-safe

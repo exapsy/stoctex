@@ -1,3 +1,9 @@
+/**
+ * Logger for the frontend application
+ * 
+ */
+
+// Dependencies
 import winston from 'winston';
 import fs      from 'fs';
 import path    from 'path';

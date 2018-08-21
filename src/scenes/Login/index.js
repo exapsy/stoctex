@@ -1,25 +1,57 @@
-// LIBRARY & APIS
-import React, { Component } from 'react';
+/**
+ * Login Scenery for when the user is not logged in
+ * 
+ */
 
-// LOCAL IMPORTS
+// Dependencies
+import React, { Component } from 'react';
 import './style.scss';
 
+/**
+ * Login Scenery to show when the user is not logged in
+ *
+ * @export
+ * @class Login
+ * @extends {Component}
+ */
 export default class Login extends Component {
+  /**
+   *Creates an instance of Login.
+   * @memberof Login
+   */
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  /**
+   * Handler for the Login Submit button
+   * Calls the external Handler if provided
+   *
+   * @param {Event} event
+   * @memberof Login
+   */
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onSubmit(
-      {
-        username: event.target.username.value, 
-        password: event.target.password.value
-      }
-    );
+    if(this.props.onSubmit) {
+      this.props.onSubmit(
+        {
+          username: event.target.username.value, 
+          password: event.target.password.value
+        }
+      );
+    } else {
+      console.error('No extenrla login submit button handler was provided for the Login Scene')
+    }
     
   }
+
+  /**
+   * Renders the Login scene
+   *
+   * @returns
+   * @memberof Login
+   */
   render() {
     return (
       <div className="login-body">

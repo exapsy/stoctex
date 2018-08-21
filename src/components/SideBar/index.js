@@ -1,14 +1,36 @@
+/**
+ * Sidebar Menu to show all the general purpose actions like Search and the account profile
+ * 
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import axios                from 'axios';
 import map                  from 'lodash/map';
-
-// LOCAL IMPORTS
 import Search       from './Search';
 import ProfileImage from '../../images/germanos_prof.jpeg'
 import api          from '../../config/api';
 import './style.scss'
 
+/**
+ * Grid menu and navigation component to be shown at the left side in the GUI
+ * Current features:
+ *  - Search
+ *  - Profile Picture TODO: To be fetched from the database when available
+ *  - Logout button
+ *  - TODO: Online Members
+ *
+ * @export
+ * @class SideBar
+ * @extends {Component}
+ */
 export default class SideBar extends Component {
+
+  /**
+   *Creates an instance of SideBar.
+   * @param {*} props
+   * @memberof SideBar
+   */
   constructor(props) {
     super(props);
 
@@ -22,6 +44,11 @@ export default class SideBar extends Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
+  /**
+   * 
+   *
+   * @memberof SideBar
+   */
   componentDidMount() {
     // Get user's displayName and initiate the displayName's state
     this.getUserDisplayName()
@@ -32,7 +59,8 @@ export default class SideBar extends Component {
 
   /**
    * Handler when the user pushes the Logout button
-   * @param {Event} event 
+   * @param {Event} event
+   * @memberof SideBar
    */
   handleLogout(event) {
     event.preventDefault();
@@ -51,8 +79,11 @@ export default class SideBar extends Component {
   }
 
   /**
+   * Fetches the current user's display name and returns a JSX including it
+   * 
    * @async
    * @returns {Promise<string>} HTML Markup for display name
+   * @memberof SideBar
    */
   getUserDisplayName() {
     return new Promise((resolve, reject) => {
@@ -94,6 +125,12 @@ export default class SideBar extends Component {
     });
   }
 
+  /**
+   * Changes the error state to active
+   *
+   * @param {string} error
+   * @memberof SideBar
+   */
   triggerError(error) {
     this.setState({
       hasError : true,
@@ -103,7 +140,12 @@ export default class SideBar extends Component {
     });
   }
 
-
+  /**
+   * Renders the component
+   *
+   * @returns
+   * @memberof SideBar
+   */
   render() {
     // TODO: check wtf has happened here
     // let displayName = this.getUserDisplayName();

@@ -1,3 +1,9 @@
+/**
+ * Container for a Row of Items with fields of different kind of needs and requirements
+ * 
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import { 
   observable, 
@@ -11,7 +17,7 @@ import _map                 from 'lodash/map';
 import _find                from 'lodash/find';
 import _forEach             from 'lodash/forEach';
 import {
-  Table,
+  Table as SemanticTable,
   Button,
   Icon,
   Input,
@@ -21,13 +27,18 @@ import {
   Modal
 }                           from 'semantic-ui-react';
 import io                   from 'socket.io-client';
-
-// LOCAL IMPORTS
 import api                  from '../../config/api';
 import './style.scss';
 
+/**
+ * 
+ *
+ * @export
+ * @class Table
+ * @extends {Component}
+ */
 @observer
-export default class StoctexTable extends Component {
+export default class Table extends Component {
   static propTypes = {
     headers:      PropTypes.object,
     items:        PropTypes.arrayOf(PropTypes.object),
@@ -50,16 +61,41 @@ export default class StoctexTable extends Component {
     dataTypes: {}
   };
 
-  /** Form's Fields - To be used when adding new item */
+  /**
+   * Form's Fields - To be used when adding new item
+   *
+   * @memberof Table
+   */
   @observable form  = {};
-  /** Table's items to display */
+  
+  /**
+   * Table's items to display
+   *
+   * @memberof Table
+   */
   @observable items = [];
-  /** Message to show when something goes wrong - TODO: understand WTF IS THIS, should I remove it, since I have error boundaries */
+  
+  /**
+   * Message to show when something goes wrong - TODO: understand WTF IS THIS, should I remove it, since I have error boundaries
+   *
+   * @memberof Table
+   */
   @observable message = {active: false, text: '', type: 'warning'};
-  /** Dimmer to be used to confirm of an item's removal when pushing the removeButton */
+  
+  /**
+   * Dimmer to be used to confirm of an item's removal when pushing the removeButton
+   *
+   * @memberof Table
+   */
   @observable confirmDimmer = {active: false, confirmed: false, itemId: null};
 
   @observable socket = io(api.v1.socket.table.url);
+
+  /**
+   * Creates an instance of Table.
+   * @param {*} props
+   * @memberof Table
+   */
   constructor(props) {
     super(props);
 
@@ -90,6 +126,12 @@ export default class StoctexTable extends Component {
     this.computeItems(props.items);
   }
 
+  /**
+   *
+   *
+   * @param {*} prevProps
+   * @memberof Table
+   */
   componentDidUpdate(prevProps) {
     // If props changed, compute the new items
     if(prevProps !== this.props) {
@@ -99,7 +141,8 @@ export default class StoctexTable extends Component {
 
   /**
    * Update the form's field that have changed
-   * @param {Event} event 
+   * @param {Event} event
+   * @memberof Table
    */
   @action.bound
   onItemAdderFieldChange(event) {
@@ -115,7 +158,8 @@ export default class StoctexTable extends Component {
 
   /**
    * Handler when the addItem button is clicked
-   * @param {Event} event 
+   * @param {Event} event
+   * @memberof Table
    */
   @action.bound
   onItemAdd(event) {
@@ -157,6 +201,7 @@ export default class StoctexTable extends Component {
   /**
    * Handler when the removeItem button is clicked
    * @param {Event} event 
+   * @memberof Table
    */
   @action.bound
   async onItemRemove(event) {
@@ -191,7 +236,8 @@ export default class StoctexTable extends Component {
 
   /**
    * Handler when a modifiable field of a displayed item is changed
-   * @param {Event} event 
+   * @param {Event} event
+   * @memberof Table
    */
   @action.bound
   onItemUpdate(event) {
@@ -226,6 +272,7 @@ export default class StoctexTable extends Component {
   /**
    * Computes the `items` array of items returning to it the updated **functions** and **values**
    * @param {[{fieldName: (string|number)}]} items The items to be computed
+   * @memberof Table
    */
   @action 
   computeItems(items) {
@@ -252,6 +299,7 @@ export default class StoctexTable extends Component {
 
   /**
    * @returns {string} HTML Markup for Table Headers
+   * @memberof Table
    */
   @computed
   get tableHeader() {
@@ -262,23 +310,24 @@ export default class StoctexTable extends Component {
     // RETURN OBJECT - HEADER
     const headerCells = _map(Object.values(headers), (headerValue, index) => {
       return (
-        <Table.HeaderCell key={uuid()} width={columnsWidth[index]}>
+        <SemanticTable.HeaderCell key={uuid()} width={columnsWidth[index]}>
           {headerValue}
-        </Table.HeaderCell>
+        </SemanticTable.HeaderCell>
       )
     });
 
     return (
-      <Table.Header>
-        <Table.Row>
+      <SemanticTable.Header>
+        <SemanticTable.Row>
           {headerCells}
-        </Table.Row>
-      </Table.Header>
+        </SemanticTable.Row>
+      </SemanticTable.Header>
     )
   }
 
   /**
    * @returns {string} HTML Markup for Table Item Adder form
+   * @memberof Table
    */
   @computed
   get tableItemAdder() {
@@ -288,11 +337,11 @@ export default class StoctexTable extends Component {
 
     // RETURN OBJECT - ADD BUTTON
     const addItemButton = (
-      <Table.Cell className='buttonCell'>
+      <SemanticTable.Cell className='buttonCell'>
         <Button icon onClick={this.onItemAdd}>
           <Icon name='plus'/>
         </Button>
-      </Table.Cell>
+      </SemanticTable.Cell>
     );
 
     // RETURN OBJECT - CELLS
@@ -317,11 +366,11 @@ export default class StoctexTable extends Component {
       };
 
       const itemAdderCell = (
-        <Table.Cell {...cellProps}>
+        <SemanticTable.Cell {...cellProps}>
           {!this.isFieldAFunction(fieldName) ? 
           <Input {...inputProps}/>
           : <span className='itemAdderFunctionField'>f(x)</span>}
-        </Table.Cell>
+        </SemanticTable.Cell>
       );
 
       itemAdderCells.push(
@@ -330,15 +379,16 @@ export default class StoctexTable extends Component {
     });
 
     return (
-      <Table.Row active key='itemAdderRow' className='itemAdderRow'>
+      <SemanticTable.Row active key='itemAdderRow' className='itemAdderRow'>
         {itemAdderCells}
         {addItemButton}
-      </Table.Row>
+      </SemanticTable.Row>
     );
   }
 
   /**
    * @returns {string} HTML Markup for Table Items
+   * @memberof Table
    */
   @computed
   get tableItems() {
@@ -353,11 +403,11 @@ export default class StoctexTable extends Component {
 
       // RETURN OBJECT - REMOVE BUTTON
       const itemRemoveButton = (
-        <Table.Cell className='buttonCell'>
+        <SemanticTable.Cell className='buttonCell'>
           <Button icon onClick={this.onItemRemove} id={item._id}>
             <Icon name='minus'/>
           </Button>
-        </Table.Cell>
+        </SemanticTable.Cell>
       );
 
       // RETURN OBJECT - CELLS
@@ -392,9 +442,9 @@ export default class StoctexTable extends Component {
           : <span className='unmodifiableField'>{item[key]}</span>;
 
         const itemCell = (
-          <Table.Cell {...tableCellProps}>
+          <SemanticTable.Cell {...tableCellProps}>
             {itemRender}
-          </Table.Cell>
+          </SemanticTable.Cell>
         );
 
         itemCells.push(
@@ -404,10 +454,10 @@ export default class StoctexTable extends Component {
       });
 
       return (
-        <Table.Row key={item._id} className='itemRow'>
+        <SemanticTable.Row key={item._id} className='itemRow'>
           {itemCells}
           {itemRemoveButton}
-        </Table.Row>
+        </SemanticTable.Row>
       );
 
     });
@@ -418,6 +468,7 @@ export default class StoctexTable extends Component {
    * Provides the type of data that the field requires/returns
    * @param {string} fieldName The field to check the data type for
    * @returns {string} The type of the field
+   * @memberof Table
    */
   getDataType(fieldName) {
 
@@ -439,6 +490,7 @@ export default class StoctexTable extends Component {
    * Checks whether a field is a function computed value or not
    * @param {string} fieldName The field to check if its a function
    * @returns {boolean} True if field is a function
+   * @memberof Table
    */
   isFieldAFunction(fieldName) {
     return this.props.functions[fieldName] ?
@@ -450,6 +502,7 @@ export default class StoctexTable extends Component {
    * Checks whether or not a field is required
    * @param {string} fieldName The field to check if its required
    * @returns {boolean} True if field is required
+   * @memberof Table
    */
   isFieldRequired(fieldName) {
     if(!this.props.requiredFields) return false;
@@ -463,6 +516,7 @@ export default class StoctexTable extends Component {
    * Checks if a field is modifiable or not
    * @param {string} fieldName The field to check if its modifiable
    * @returns {boolean} True if field is modifiable
+   * @memberof Table
    */
   isFieldModifiable(fieldName) {
     if(!this.props.modifiableFields) return false;
@@ -476,6 +530,7 @@ export default class StoctexTable extends Component {
    * Triggers a dimmer which displays the message provided
    * @param {string} message The message to display to the dimmer
    * @param {string} type 'Warning' for a warning message, 'Error' for an error type of message
+   * @memberof Table
    */
   triggerMessage(message, type) {
     this.message.text   = message;
@@ -501,13 +556,13 @@ export default class StoctexTable extends Component {
     return (
       <div className='table'>
         <Dimmer.Dimmable dimmed={this.message.active} blurring>
-          <Table {...tableProps}>
+          <SemanticTable {...tableProps}>
             {this.tableHeader}
             <Transition.Group as={Table.Body} animation='fade left' duration={200}>
               {this.tableItemAdder}
               {this.tableItems}
             </Transition.Group>
-          </Table>
+          </SemanticTable>
 
           <Dimmer active={this.message.active} onClickOutside={this.handleHideDimmer}>
             <Header as='h1' color='red'>

@@ -1,3 +1,8 @@
+/**
+ * Handles the Exceptions when thrown and not handled
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import {
   Dimmer
@@ -6,6 +11,10 @@ import {
 /**
  * Renders an Error Block which describes the error if an error was catched
  * Otherwise, returns the children components
+ *
+ * @export
+ * @class ErrorBoundary
+ * @extends {Component}
  */
 export default class ErrorBoundary extends Component {
   constructor(props) {
