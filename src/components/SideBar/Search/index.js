@@ -32,7 +32,6 @@ export default class Search extends Component {
       return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
     };
 
-    // Regex object
     const searchRegex = new RegExp(RegExp.escape(event.target.value), 'i');
 
     // Changing the filter function in the listStore, in order to update the newly filtered items

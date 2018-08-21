@@ -89,6 +89,11 @@ export default class Table extends Component {
    */
   @observable confirmDimmer = {active: false, confirmed: false, itemId: null};
 
+  /**
+   * Socket Client for Live API calls
+   *
+   * @memberof Table
+   */
   @observable socket = io(api.v1.socket.table.url);
 
   /**
@@ -99,12 +104,12 @@ export default class Table extends Component {
   constructor(props) {
     super(props);
 
-    // column width init
+    // columnsWidth init
     if(props.totalColumns && !props.columnsWidth) {
       props.columnsWidth = new Array(props.totalColumns).fill(1);
     }
 
-    // form init
+    // Form init
     if(props.itemAdd) {
       _forEach(props.headers, (header, key) => {
         this.form[key] = { value: '', error: null };
@@ -133,7 +138,6 @@ export default class Table extends Component {
    * @memberof Table
    */
   componentDidUpdate(prevProps) {
-    // If props changed, compute the new items
     if(prevProps !== this.props) {
       this.computeItems(this.props.items);
     }
