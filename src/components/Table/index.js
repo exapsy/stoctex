@@ -7,9 +7,9 @@ import {
 import { observer }         from 'mobx-react';
 import PropTypes            from 'prop-types';
 import uuid                 from 'uuid';
-import _map                  from 'lodash/map';
-import _find                 from 'lodash/find';
-import _forEach              from 'lodash/forEach';
+import _map                 from 'lodash/map';
+import _find                from 'lodash/find';
+import _forEach             from 'lodash/forEach';
 import {
   Table,
   Button,
@@ -20,7 +20,10 @@ import {
   Transition,
   Modal
 }                           from 'semantic-ui-react';
+import io                   from 'socket.io-client';
 
+// LOCAL IMPORTS
+import api                  from '../../config/api';
 import './style.scss';
 
 @observer
@@ -56,6 +59,7 @@ export default class StoctexTable extends Component {
   /** Dimmer to be used to confirm of an item's removal when pushing the removeButton */
   @observable confirmDimmer = {active: false, confirmed: false, itemId: null};
 
+  @observable socket = io(api.v1.socket.table.url);
   constructor(props) {
     super(props);
 
@@ -70,6 +74,18 @@ export default class StoctexTable extends Component {
         this.form[key] = { value: '', error: null };
       });
     };
+
+    // Socket Live API communication service init
+    
+    this.socket.on(api.v1.socket.table.events.tableFieldChanged, (info) => {
+      if(this.props.refreshItems) {
+        if(info.changedBy !== this.socket.id) {
+          this.props.refreshItems();
+        }
+      } else {
+        console.log('Undefined `refreshItems()` function, couldn\'t refresh table after field change event');
+      }
+    });
 
     this.computeItems(props.items);
   }
@@ -93,6 +109,7 @@ export default class StoctexTable extends Component {
     const newValue  = event.target.value;
     
     this.form[fieldName].value = newValue;
+
 
   }
 
@@ -200,8 +217,10 @@ export default class StoctexTable extends Component {
     // Call props handler if existant, else does nothing
     if(this.props.onItemUpdate) {
       this.props.onItemUpdate(objectId, fieldName, newValue)
-        .catch(err =>  this.triggerMessage(err.response.data.errmsg, 'error'));
+        .catch(err =>  this.triggerMessage(err, 'error'));
     }
+
+    this.socket.emit(api.v1.socket.table.events.tableFieldChanged, {objectId, fieldName, newValue});
   }
 
   /**
@@ -493,7 +512,7 @@ export default class StoctexTable extends Component {
           <Dimmer active={this.message.active} onClickOutside={this.handleHideDimmer}>
             <Header as='h1' color='red'>
               {this.message.type.toUpperCase()}
-            </Header>
+            </Header> 
             <Header as='h2' style={{color: '#f1f1f8'}}>
               {this.message.text}
             </Header>
@@ -502,7 +521,7 @@ export default class StoctexTable extends Component {
             open={this.confirmDimmer.active} 
             basic
             size='small'>
-              <Header content='Remove Item' />
+
               <Modal.Content>
                 <p>
                   Are you sure you want to remove this item?

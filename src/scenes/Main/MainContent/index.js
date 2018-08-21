@@ -30,7 +30,8 @@ export default class MainContent extends Component {
       modifiableFields, 
       addItemDb,
       removeItemDb,
-      updateItemDb
+      updateItemDb,
+      refreshItems
     } = this.props.listStore;
 
     return (
@@ -48,6 +49,7 @@ export default class MainContent extends Component {
           onItemAdd={addItemDb}
           onItemRemove={removeItemDb}
           onItemUpdate={updateItemDb}
+          refreshItems={refreshItems}
         />
       </div>
     )

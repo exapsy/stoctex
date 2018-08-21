@@ -231,6 +231,22 @@ export default class ListStore {
   }
 
   /**
+   * Fetches the items from the API
+   * 
+   * @memberof ListStore
+   */
+  @action.bound
+  refreshItems() {
+    setTimeout(
+      () => this.fetchItems()
+      .then(fetchedItems => {
+        this.items = fetchedItems;
+      }),
+      100
+    )
+  }
+
+  /**
    * Fetches and returns the items for the current mode from the API
    * @async
    * @returns {Promise<[{fieldName: any}]>}
@@ -354,7 +370,7 @@ export default class ListStore {
 
       if(!itemId) reject('Error Updating Item: itemId was undefined or null');
       if(!fieldName) reject('Error Updating Item: fieldName was undefined or null');
-      if(!newValue) reject('Error Updating Item: newValue was undefined or null');
+      if(!newValue) return;
 
       // API URL to make `put` request to
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
