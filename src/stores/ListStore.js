@@ -370,7 +370,7 @@ export default class ListStore {
 
       if(!itemId) reject('Error Updating Item: itemId was undefined or null');
       if(!fieldName) reject('Error Updating Item: fieldName was undefined or null');
-      if(!newValue) return;
+      if(!newValue) resolve('Acceptable but item not updated - New Value is null or undefined');
 
       // API URL to make `put` request to
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
