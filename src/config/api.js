@@ -1,3 +1,10 @@
+/**
+ * Provides the appropriate API URLs to the application
+ * Depending on the NODE ENVIRONMENT, it may give different urls
+ * Current Services are `http` for http requests and `socket` for socketio live api requests
+ * 
+ */
+
 let base = '';
 
 // Set the base URL to the appropriate one, depending on the current Node Environment

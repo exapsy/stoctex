@@ -1,8 +1,12 @@
+/**
+ * Main component for the Application
+ * 
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import { Provider }         from 'mobx-react';
 import MobxDevTools         from 'mobx-react-devtools';
-
-// LOCAL IMPORTS
 import ErrorBoundary from './components/ErrorBoundary';
 import SceneSelector from './scenes/SceneSelector';
 import ListStore from './stores/ListStore';

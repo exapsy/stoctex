@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import { toJS }             from 'mobx';
-
-// LOCAL IMPORTS
 import Table from '../../../components/Table';
 import ListStore from '../../../stores/ListStore';
 import './style.scss';

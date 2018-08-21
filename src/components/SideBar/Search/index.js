@@ -1,7 +1,11 @@
+/**
+ * Search Component to search for a specific item from #ListStore storage
+ * 
+ */
+
+// Dependencies
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-
-// LOCAL IMPORTS
 import './style.scss';
 
 @inject('listStore')
