@@ -33,7 +33,7 @@ export default class ErrorBoundary extends Component {
       margin: 'auto',
       marginTop: '32px',
       padding: '64px',
-      // backgroundImage: 'linear-gradient(0deg, #1B1B1B, #242124)',
+      backgroundImage: 'linear-gradient(0deg, #1B1B1B, #242124)',
       borderRadius: '12px'
     };
 
@@ -54,11 +54,15 @@ export default class ErrorBoundary extends Component {
       this.state.error.message :
       null;
 
+    const objectToDisplay = !this.state.hasError ? 
+      this.props.children :
+      <div></div>;
+      
     // If an error was catched then render an Error Block instead of Children
     return (
       <div className='errorBoundary'>
         <div className='errorBoundary'>
-          {this.props.children}
+          {objectToDisplay}
         </div>
         <Dimmer active={this.state.hasError}>
           <div className='errorBoundary' style={errorBoundaryStyle}>
