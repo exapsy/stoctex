@@ -41,7 +41,7 @@ export default class Login extends Component {
         }
       );
     } else {
-      console.error('No extenrla login submit button handler was provided for the Login Scene')
+      console.error('No external login submit button handler was provided for the Login Scene')
     }
     
   }

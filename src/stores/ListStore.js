@@ -135,7 +135,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   constructor(mode) {
-    // If mode not included in enumerable 'modes', it's an error
     if(!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
 
     this.mode = mode;
@@ -154,7 +153,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get headers() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].headers;
@@ -166,7 +164,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get totalColumns() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].totalColumns;
@@ -178,7 +175,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get columnsWidth() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].columnsWidth;
@@ -190,7 +186,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get functions() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].functions;
@@ -201,7 +196,6 @@ export default class ListStore {
    * @returns {{fieldName: type}}
    */
   @computed get dataTypes() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].dataTypes;
@@ -213,7 +207,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get requiredFields() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].requiredFields;
@@ -226,7 +219,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get modifiableFields() {
-    // Mode must be defined
     if(!this.mode) this.triggerError('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].modifiableFields;
@@ -238,7 +230,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get api() {
-    // Mode must be defined
     if(!this.mode) console.log('List mode was not defined during item fetching');
     
     return this._modeFields[this.mode].api;
@@ -274,7 +265,6 @@ export default class ListStore {
       // API URL to make `post` request to
       const url = this.api;
 
-      // API get Request
       axios.get(url)
         .then(
           action("fetchItems.success", (res) => {
@@ -299,10 +289,8 @@ export default class ListStore {
 
       if(!item) reject('Item parameter was undefined');
 
-      // API URL to make `post` request to
       const url = this.api;
 
-      // API post Request
       axios.post(
         url, 
         item, 
@@ -343,10 +331,8 @@ export default class ListStore {
 
       if(!itemId) reject(`Object's ID wasn't given, unable to remove item`);
 
-      // API URL to make `delete` request to
       const url = `${this.api}/${itemId}`;
 
-      // API delete Request
       axios.delete(
         url,
         {withCredentials: true}
@@ -390,10 +376,8 @@ export default class ListStore {
       if(!fieldName) reject('Error Updating Item: fieldName was undefined or null');
       if(!newValue) resolve('Acceptable but item not updated - New Value is null or undefined');
 
-      // API URL to make `put` request to
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
-      // API put Request
       axios.put(url)
         .then(
           action('updateItemDb.success'),
@@ -449,7 +433,6 @@ export default class ListStore {
    * @memberof ListStore
    */
   sum(array) {
-    // Summing up all the numbers, type-safe
     return _reduce(array, (total, n) => {
       n = !n ? 0 : n;
       return Number(total) + Number(n);
