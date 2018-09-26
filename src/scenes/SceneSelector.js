@@ -8,7 +8,8 @@ import React, { Component } from 'react';
 import axios                from  'axios';
 import {
   Dimmer,
-  Loader
+  Loader,
+  Header
 }                           from 'semantic-ui-react';
 import Login from './Login';
 import Main  from './Main';
@@ -61,7 +62,16 @@ export default class SceneSelector extends Component {
       }
     )
     .then(value => {
-      this.setState({userData: value.data, isLoggedIn: value ? true : false, isLoading: false});
+      const loggedIn = value.data;
+
+      // Show `wrong credentials` message for 3sec
+      if(!loggedIn) {
+        this.setState({wrongCredentialsError: true})
+        setTimeout(() => this.setState({wrongCredentialsError: false}), 2000);
+      }
+
+      // Deactivates the dimmer
+      this.setState({userData: loggedIn, isLoggedIn: loggedIn ? true : false, isLoading: false});
     })
     .catch(err => { this.triggerError(`Error on login request ${err.message}`) });
     //console.log('Error on login request', err)
@@ -174,6 +184,10 @@ export default class SceneSelector extends Component {
 
         <Dimmer active={this.state.isLoading && !this.state.hasError}>
           <Loader/>
+        </Dimmer>
+        <Dimmer active={this.state.wrongCredentialsError} style={{display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', justifyContent: 'center'}}>
+          <Header as='h1' style={{color:'#f1f1f1'}}>Wrong Credentials</Header>
+          <p style={{color: '#ff2222'}}>Username or Password is wrong, try again with other credentials</p>
         </Dimmer>
       </div>
     )
