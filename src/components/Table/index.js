@@ -562,7 +562,7 @@ export default class Table extends Component {
         <Dimmer.Dimmable dimmed={this.message.active} blurring>
           <SemanticTable {...tableProps}>
             {this.tableHeader}
-            <Transition.Group as={Table.Body} animation='fade left' duration={200}>
+            <Transition.Group as={SemanticTable.Body} animation='fade left' duration={200}>
               {this.tableItemAdder}
               {this.tableItems}
             </Transition.Group>
