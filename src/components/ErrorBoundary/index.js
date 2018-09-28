@@ -94,7 +94,7 @@ export default class ErrorBoundary extends Component {
             {errorMessage}
           </p>
           <p>
-            Contact with the administrator developer +31-6975 362321 - apostolis.anastasiou.alpha@gmail.com
+            Contact with the administrator developer +30-6975 362321 - apostolis.anastasiou.alpha@gmail.com
           </p>
         </div>
         </Dimmer>
