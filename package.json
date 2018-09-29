@@ -71,7 +71,9 @@
     "watch-semantic": "cd src/semantic && yarn run build-semantic && gulp watch",
     "start": "node scripts/start.js",
     "build": "npm run build-semantic && node scripts/build.js",
+    "build:staging": "REACT_APP_ENV=staging npm run build",
     "dev": "npm run build-semantic && node scripts/start.js",
+    "staging": "npm run build:staging && serve -s build -l 4002",
     "prod": "npm run build && serve -s build -l 3002",
     "test": "node scripts/test.js --env=jsdom",
     "heroku-postbuild": "npm install && npm run build"
