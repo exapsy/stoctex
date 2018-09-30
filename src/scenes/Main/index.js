@@ -7,6 +7,8 @@
 import React, { Component } from 'react';
 import MainContent  from './MainContent';
 import SideBar        from '../../components/SideBar';
+import { Provider }         from 'mobx-react';
+import ListStore from '../../stores/ListStore';
 import './style.scss';
 
 /**
@@ -19,12 +21,14 @@ import './style.scss';
 export default class Main extends Component {
   render() {
     return (
-      <div className='Main'>
-        <div className='content'>
-          <SideBar/>
-          <MainContent/>
+      <Provider listStore={new ListStore(ListStore.modes.PRODUCTS)}>
+        <div className='Main'>
+          <div className='content'>
+            <SideBar/>
+            <MainContent/>
+          </div>
         </div>
-      </div>
+      </Provider>
     )
   }
 }
