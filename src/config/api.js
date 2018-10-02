@@ -8,9 +8,9 @@
 let base = '';
 
 // Set the base URL to the appropriate one, depending on the current Node Environment
-if(process.env.NODE_ENV === 'production') {
+if(process.env.API === 'production') {
   base = 'https://api.gphub.gpsupplies.com'
-} else if(process.env.NODE_ENV === 'staging') {
+} else if(process.env.API === 'staging') {
   base = 'https://staging.api.gphub.gpsupplies.com';
 } else {
   base = 'http://localhost:8001';

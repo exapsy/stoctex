@@ -69,7 +69,7 @@
   "homepage": "https://stoctex.gpsupplies.gr",
   "scripts": {
     "start": "npm run dev",
-    "dev": "node scripts/start.js",
+    "dev": "cross-env NODE_ENV=staging node scripts/start.js",
     "staging": "npm run build:staging && serve -s build -l 4002",
     "prod": "npm run build && serve -s build -l 3002",
     "test": "node scripts/test.js --env=jsdom",
