@@ -9,9 +9,9 @@ let base = '';
 console.log('process.env.REACT_APP_API = ', process.env.REACT_APP_API);
 // Set the base URL to the appropriate one, depending on the current Node Environment
 if(process.env.REACT_APP_API === 'production') {
-  base = 'https://api.gphub.gpsupplies.com'
+  base = 'https://api.gphub.melaniatoners.gr'
 } else if(process.env.REACT_APP_API === 'staging') {
-  base = 'https://staging.api.gphub.gpsupplies.com';
+  base = 'https://staging.api.gphub.melaniatoners.gr';
 } else {
   base = 'http://localhost:8001';
 }
