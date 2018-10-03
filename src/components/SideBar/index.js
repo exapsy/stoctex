@@ -7,9 +7,10 @@
 import React, { Component } from 'react';
 import axios                from 'axios';
 import map                  from 'lodash/map';
-import Search       from './Search';
-import ProfileImage from '../../images/germanos_prof.jpeg'
-import api          from '../../config/api';
+import Search               from './Search';
+import PageSearch           from './PageSearch';
+import ProfileImage         from '../../images/germanos_prof.jpeg'
+import api                  from '../../config/api';
 import './style.scss'
 
 /**
@@ -165,6 +166,7 @@ export default class SideBar extends Component {
           </h4>
           <a href='#logout' onClick={this.handleLogout} className="link w-button">LOGOUT</a>
         </div>
+        <PageSearch/>
         <Search updateList={this.props.updateList}/>
         <div className="sidebar-content">
           <div className="footer">

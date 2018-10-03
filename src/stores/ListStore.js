@@ -27,11 +27,17 @@ export default class ListStore {
   /** All the items to be fetched to the list, unfiltered */
   @observable items = [];
   
+  /** The current page of the filtered items */
+  @observable currentPage = 1;
+
+  @observable itemsPerPage = 12;
+
   /** Editable observable function provided, for the filters to be modifiable however it is desired */
   @observable itemFilterCallback = () => true;
 
   /** Provides an enumerable from 'modes' freezed variable, which describes what type of items the ListStore provides */
   @observable mode;
+
 
   /** Error Catch for ErrorBoundary parent component */
   @observable errorBoundary = {
@@ -397,6 +403,37 @@ export default class ListStore {
    */
   @computed get filteredItems() {
     return _filter(this.items, this.itemFilterCallback);
+  }
+
+  /**
+   * Filters the `items` object with the `itemFilterCallback` observable function and then places them in a page accordinge to the page rules
+   * @returns {[{fieldName: (string|number)}]} Filtered Items
+   * @memberof ListStore
+   */
+  @computed get filteredPagedItems() {
+    
+    // Slicing filtered items to match the current page
+    const sliceStart = (this.currentPage-1)* this.itemsPerPage
+    const sliceEnd   = (this.currentPage-1) * this.itemsPerPage + this.itemsPerPage;
+
+    return _filter(this.items, this.itemFilterCallback).slice(sliceStart, sliceEnd);
+  }
+
+  @computed get totalPages() {
+    const totalPages = Math.floor(this.filteredItems.length / this.itemsPerPage)+1;
+    return Number(totalPages);
+  }
+
+  /**
+   * Sets the page of the filtered items
+   *
+   * @memberof ListStore
+   */
+  @action setPage(page) {
+    // if(!Number(page)) return;
+    if(page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+    }
   }
 
   /**
