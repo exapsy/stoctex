@@ -89,7 +89,7 @@ export default class ListStore {
       requiredFields: {
         code1:   true,
         code2:   false,
-        barcode: true,
+        barcode: false,
         name:    true,
         gs:      true,
         corfu:   true,
@@ -99,7 +99,7 @@ export default class ListStore {
       modifiableFields: {
         code1:   false,
         code2:   true,
-        barcode: false,
+        barcode: true,
         name:    false,
         gs:      true,
         corfu:   true,
