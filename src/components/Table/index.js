@@ -269,8 +269,6 @@ export default class Table extends Component {
       this.props.onItemUpdate(objectId, fieldName, newValue)
         .catch(err =>  this.triggerMessage(err, 'error'));
     }
-
-    this.socket.emit(api.v1.socket.table.events.tableFieldChanged, {objectId, fieldName, newValue});
   }
 
   /**
