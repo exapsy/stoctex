@@ -66,7 +66,7 @@
     "node": ">=9.6.1",
     "npm": ">=5.6.0"
   },
-  "homepage": "https://stoctex.gpsupplies.gr",
+  "homepage": "https://stoctex.melaniatoners.gr",
   "scripts": {
     "start": "npm run dev",
     "dev": "cross-env NODE_ENV=staging node scripts/start.js",
