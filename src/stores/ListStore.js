@@ -253,7 +253,7 @@ export default class ListStore {
       .then(fetchedItems => {
         this.items = fetchedItems;
       }),
-      600
+      10
     )
   }
 
