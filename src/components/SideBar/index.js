@@ -160,7 +160,7 @@ export default class SideBar extends Component {
           <h1 className="logo-heading">STOCTEX</h1>
         </div>
         <div className="profile">
-          <img alt="profile" src={ProfileImage} className="profile-image"/>
+          {/* <img alt="profile" src={ProfileImage} className="profile-image"/> */}
           <h4 className="profile-heading">
             {this.state.displayName}
           </h4>
