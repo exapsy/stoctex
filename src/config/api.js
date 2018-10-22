@@ -5,7 +5,7 @@
  * 
  */
 
-let base = process.env.API_URI || 'http://localhost:8001';
+let base = process.env.REACT_APP_API_URI || 'http://localhost:8001';
 
 export default {
   'v1': {
