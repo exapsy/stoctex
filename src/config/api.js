@@ -5,7 +5,7 @@
  * 
  */
 
-let base = 'http://localhost:8001' || process.env.API_URI;
+let base = process.env.API_URI || 'http://localhost:8001';
 
 export default {
   'v1': {
