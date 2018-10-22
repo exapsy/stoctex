@@ -67,7 +67,7 @@ export default class Login extends Component {
                   type="text" 
                   className="text-field w-input" 
                   maxLength="256" 
-                  autoFocus="true" 
+                  autoFocus={true} 
                   name="username" 
                   placeholder="Username" 
                   id="username"/>
