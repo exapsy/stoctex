@@ -40,6 +40,8 @@ export default class ErrorBoundary extends Component {
       error: error,
       info: info
     });
+
+    console.error(error, info);
   }
 
   /**
