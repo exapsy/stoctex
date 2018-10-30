@@ -64,10 +64,10 @@ export default class ListStore {
         code2:   'Code2', 
         barcode: 'Barcode',
         name:    'Name',
-        gs:      'GS',
-        corfu:   'Corfu',
-        cclit:   'CClit',
-        gp_k:    'GP K',
+        gs:      'ΑΠ1',
+        corfu:   'KE1',
+        cclit:   'CC',
+        gp_k:    'MA1',
         total:   'Total'
       },
       functions: {
