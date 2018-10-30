@@ -19,7 +19,7 @@ class App extends Component {
       <div className="app">
         <ErrorBoundary>
           <SceneSelector/>
-          {process.env.NODE_ENV='production' ? null : <MobxDevTools/>}
+          {process.env.NODE_ENV === 'production' ? null : <MobxDevTools/>}
         </ErrorBoundary>
       </div>
     );
