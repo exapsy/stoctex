@@ -27,6 +27,7 @@ export default class Search extends Component {
    * @param {Event} event 
    */
   handleSearchChange(event) {
+    event.preventDefault();
     // Escape function to remove any escape characters from the user's string - BUG prevention    
     RegExp.escape = function(string) {
       return string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -47,7 +48,7 @@ export default class Search extends Component {
 
   render() {
     return (
-      <form action="/search" className="search w-form">
+      <form action="/search" className="search w-form" onSubmit={e => { e.preventDefault(); }}>
         <input 
           type="search" 
           className="search-input w-input" 
