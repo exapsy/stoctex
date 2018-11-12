@@ -271,7 +271,7 @@ export default class ListStore {
       // API URL to make `post` request to
       const url = this.api;
 
-      axios.get(url)
+      axios.get(url, { withCredentials: true })
         .then(
           action("fetchItems.success", (res) => {
             resolve(res.data);
