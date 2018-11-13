@@ -120,7 +120,7 @@ export default class Table extends Component {
     
     this.socket.on(api.v1.socket.table.events.tableFieldChanged, (info) => {
       if(this.props.refreshItems) {
-        if(info.changedBy !== this.socket.id) {
+        if(info.author !== this.socket.id) {
           this.props.refreshItems();
         }
       } else {
