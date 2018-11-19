@@ -437,11 +437,12 @@ export default class Table extends Component {
         };
         
         // FIELD IS EITHER A FUNCTION / UNMODIFIABLE / MODIFIABLE
+        const fieldKey = item[key]; 
         const itemRender = fieldState === 'function' ?
-          <span className='functionField'>{item[key]}</span>
+          <span className='functionField'>{fieldKey}</span>
           : fieldState === 'modifiable' ?
           <Input {...inputProps} className='modifiableField'/>
-          : <span className='unmodifiableField'>{item[key]}</span>;
+          : <span className='unmodifiableField'>{fieldKey}</span>;
 
         const itemCell = (
           <SemanticTable.Cell {...tableCellProps}>
