@@ -18,7 +18,6 @@ import PropTypes from 'prop-types';
 import uuid from 'uuid';
 import _map from 'lodash/map';
 import _find from 'lodash/find';
-import _findIndex from 'lodash/findIndex';
 import _forEach from 'lodash/forEach';
 import {
   Table as SemanticTable,
