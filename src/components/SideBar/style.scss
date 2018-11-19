@@ -50,7 +50,7 @@
 .profile {
   display: flex;
   width: 100%;
-  height: 256px;
+  height: 156px;
   padding-top: 12px;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -64,7 +64,7 @@
 }
 
 .profile-image {
-  display: block;
+  display: inline-block;
   width: 30%;
   margin-right: auto;
   margin-left: auto;
@@ -72,7 +72,7 @@
 }
 
 .profile-heading {
-  display: block;
+  display: inline-block;
   margin-top: 5px;
   margin-right: auto;
   margin-left: auto;
@@ -96,11 +96,10 @@
   color: #fff !important;
 }
 
-.footer p {
-  padding-top: 256px;
+div .footer p {
   padding-right: 12px;
   padding-left: 12px;
+  width: 100%;
   text-align: center;
   color: #36454f6b;
-  text-align: center;
 }
