@@ -30,19 +30,20 @@ export default class PageSearch extends Component {
   
 
   buttonLeftHandler(event) {
-    this.props.listStore.setPage(this.props.listStore.currentPage - 1)
-    this.setState({inputValue: Number(this.props.listStore.currentPage)})
+    this.props.listStore.setPage(Number(this.props.listStore.currentPage) - 1)
+    this.setState({inputValue: this.props.listStore.currentPage})
   }
 
   buttonRightHandler(event) {
-    this.props.listStore.setPage(this.props.listStore.currentPage + 1)
-    this.setState({inputValue: Number(this.props.listStore.currentPage)})
+    this.props.listStore.setPage(Number(this.props.listStore.currentPage) + 1)
+    this.setState({inputValue: this.props.listStore.currentPage})
   }
 
   render() {
     return (
-      <div className='pageSearch'>
-        <div>
+      <div className='page-search'>
+        <h1>Page</h1>
+        <div className='page-indicator'>
           <Input onChange={(event) => {
             const newValue = event.target.value;
             if(!newValue) {
@@ -58,7 +59,7 @@ export default class PageSearch extends Component {
           label={'/ ' + this.props.listStore.totalPages} 
           labelPosition='right'/>
         </div>
-        <div>
+        <div className='navigation-buttons'>
           <Button icon='arrow left'  disabled={this.props.listStore.currentPage <= 1} onClick={this.buttonLeftHandler}/>
           <Button icon='arrow right' disabled={this.props.listStore.currentPage >= this.props.listStore.totalPages} onClick={this.buttonRightHandler}/>
         </div>

@@ -1,6 +1,23 @@
-.pageSearch {
-  margin-top: 16px;
-  margin-bottom: 16px;
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.page-search {
+  padding-top: 16px;
   margin: auto !important;
   text-align: center;
+}
+
+.page-search h1 {
+  text-transform: uppercase;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.8em;
+  font-weight: 100;
+}
+
+.page-search .page-indicator {
+  margin-top: -16px;
+}
+
+.page-search .navigation-buttons {
+  margin-top: 4px;
 }
