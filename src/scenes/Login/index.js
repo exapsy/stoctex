@@ -5,6 +5,8 @@
 
 // Dependencies
 import React, { Component } from 'react';
+import { inject, observer } from 'mobx-react';
+import { Dimmer, Header, Loader } from 'semantic-ui-react';
 import './style.scss';
 
 /**
@@ -14,6 +16,8 @@ import './style.scss';
  * @class Login
  * @extends {Component}
  */
+@inject('userStore')
+@observer
 export default class Login extends Component {
   /**
    *Creates an instance of Login.
@@ -22,6 +26,7 @@ export default class Login extends Component {
   constructor() {
     super();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.state = { loginLoading: false, wrongCredentials: false };
   }
 
   /**
@@ -33,17 +38,30 @@ export default class Login extends Component {
    */
   handleSubmit(event) {
     event.preventDefault();
-    if(this.props.onSubmit) {
-      this.props.onSubmit(
-        {
-          username: event.target.username.value, 
-          password: event.target.password.value
+
+    // User Credentials
+    const username = event.target.username.value;
+    const password = event.target.password.value;
+
+    // Setting loader
+    this.setState({loginLoading: true})
+
+    this.props.userStore.login(username, password)
+      .then(loggedIn => {
+        // Resetting loader
+        this.setState({loginLoading: false});
+
+        // Show error message if credentials were unauthorized
+        if(!loggedIn) {
+          this.setState({wrongCredentials: true});
+          setTimeout(() => {
+            this.setState({wrongCredentials: false});
+          }, 2000);
         }
-      );
-    } else {
-      console.error('No external login submit button handler was provided for the Login Scene')
-    }
-    
+      })
+      .catch(err => {
+        throw new Error('Error occured on logging in:', err);
+      });
   }
 
   /**
@@ -90,6 +108,13 @@ export default class Login extends Component {
             </div>
           </div>
         </div>
+        <Dimmer className='wrong-credentials-dimmer' active={this.state.wrongCredentials}>
+          <Header as='h1'>Wrong Credentials</Header>
+          <p>Username or Password is wrong, try again with other credentials</p>
+        </Dimmer>
+        <Dimmer className='login-loader' active={this.state.loginLoading}>
+          <Loader/>
+        </Dimmer>
       </div>
     );
   }
