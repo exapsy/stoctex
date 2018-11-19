@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-      "experimentalDecorators": true,
-      "allowJs": true
+    "target": "es2017",
+    "experimentalDecorators": true,
+    "allowJs": true
   }
 }
