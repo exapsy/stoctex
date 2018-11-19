@@ -9,13 +9,17 @@ import {
   observable, 
   action,
   computed
-}                           from 'mobx';
-import { observer }         from 'mobx-react';
-import PropTypes            from 'prop-types';
-import uuid                 from 'uuid';
-import _map                 from 'lodash/map';
-import _find                from 'lodash/find';
-import _forEach             from 'lodash/forEach';
+} from 'mobx';
+import { 
+  observer,
+  inject
+} from 'mobx-react';
+import PropTypes from 'prop-types';
+import uuid from 'uuid';
+import _map from 'lodash/map';
+import _find from 'lodash/find';
+import _findIndex from 'lodash/findIndex';
+import _forEach from 'lodash/forEach';
 import {
   Table as SemanticTable,
   Button,
@@ -25,9 +29,9 @@ import {
   Header,
   Transition,
   Modal
-}                           from 'semantic-ui-react';
-import io                   from 'socket.io-client';
-import api                  from '../../config/api';
+} from 'semantic-ui-react';
+import io from 'socket.io-client';
+import api from '../../config/api';
 import './style.scss';
 
 /**
@@ -37,6 +41,7 @@ import './style.scss';
  * @class Table
  * @extends {Component}
  */
+@inject('userStore')
 @observer
 export default class Table extends Component {
   static propTypes = {
@@ -119,12 +124,15 @@ export default class Table extends Component {
     // Socket Live API communication service init
     
     this.socket.on(api.v1.socket.table.events.tableFieldChanged, (info) => {
+      const { author } = info;
+      const { userId: currentUser } = this.props.userStore;
+
       if(this.props.refreshItems) {
-        if(info.author !== this.socket.id) {
+        if(author !== currentUser) {
           this.props.refreshItems();
-        }
+        } 
       } else {
-        console.log('Undefined `refreshItems()` function, couldn\'t refresh table after field change event');
+        console.error('Undefined `refreshItems()` function, couldn\'t refresh table after field change event');
       }
     });
 
@@ -286,7 +294,10 @@ export default class Table extends Component {
       // FILLING item
       _forEach(headers, (header, key) => {
         // IF FIELD = FUNCTION THEN: RETURN FUNCTION VALUE
-        if(this.isFieldAFunction(key)) computedItem[key] = this.props.functions[key](item);
+        if(this.isFieldAFunction(key)) {
+          const functionResult = this.props.functions[key](item);
+          computedItem[key] = functionResult ? functionResult : 0;
+        }
         
         else computedItem[key] = item[key];
 
