@@ -172,12 +172,12 @@ export default class SideBar extends Component {
         <PageSearch/>
         <Actions/>
         <Information/>
-        <div className="footer">
+        {/* <div>
           <p>
           Copyrights(c) 2017-2018<br/>
           GPSupplies
           </p>
-        </div>
+        </div> */}
       </div>
     )
   }
