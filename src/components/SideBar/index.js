@@ -12,6 +12,8 @@ import PageSearch           from './PageSearch';
 import ProfileImage         from '../../images/germanos_prof.jpeg'
 import api                  from '../../config/api';
 import './style.scss'
+import Actions from './Actions';
+import Information from './Information';
 
 /**
  * Grid menu and navigation component to be shown at the left side in the GUI
@@ -166,15 +168,15 @@ export default class SideBar extends Component {
           </h4>
           <a href='#logout' onClick={this.handleLogout} className="link w-button">LOGOUT</a>
         </div>
-        <PageSearch/>
         <Search updateList={this.props.updateList}/>
-        <div className="sidebar-content">
-          <div className="footer">
-            <p className="paragraph">
-            Copyrights(c) 2017-2018<br/>
-            GPSupplies
-            </p>
-          </div>
+        <PageSearch/>
+        <Actions/>
+        <Information/>
+        <div className="footer">
+          <p>
+          Copyrights(c) 2017-2018<br/>
+          GPSupplies
+          </p>
         </div>
       </div>
     )
