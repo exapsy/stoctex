@@ -97,10 +97,10 @@ export default class ListStore {
         gp_k:    true
       },
       modifiableFields: {
-        code1:   false,
+        code1:   true,
         code2:   true,
         barcode: true,
-        name:    false,
+        name:    true,
         gs:      true,
         corfu:   true,
         cclit:   true,
