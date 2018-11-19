@@ -3,10 +3,6 @@ import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
 import Table from '../../../components/Table';
 import './style.scss';
-import { 
-  Button,
-  Input
-} from 'semantic-ui-react';
 
 @inject("listStore")
 @observer
@@ -53,6 +49,6 @@ export default class MainContent extends Component {
           refreshItems={refreshItems}
         />
       </div>
-    )
+    );
   }
 }
