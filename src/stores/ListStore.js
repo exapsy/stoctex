@@ -23,6 +23,30 @@ import api from '../config/api';
  * Stores and Retrieves List data through and from the API
  */
 export default class ListStore {
+  /**
+   * 
+   * @param {string} mode The type of model for the list to retrieve
+   * @memberof ListStore
+   */
+  constructor(mode) {
+    if(!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
+
+    this.mode = mode;
+
+    // Fetch items and set them to `items`
+    this.fetchItems()
+      .then(value => {
+        this.items = value;
+      })
+      .catch(err => { this.triggerError(`Error while fetching items ${err}`)});
+  }
+
+  /**
+   * Stores the UserStore state
+   * Important when needed to send author information of the database updates
+   *
+   * @memberof ListStore
+   */
 
   /** All the items to be fetched to the list, unfiltered */
   @observable items = [];
