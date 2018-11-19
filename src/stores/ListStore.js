@@ -412,7 +412,12 @@ export default class ListStore {
 
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
-      axios.put(url)
+      axios(
+        {
+          method: 'put',
+          url, 
+          withCredentials: true
+        })
         .then(
           action('updateItemDb.success'),
           (value) => resolve(value)
