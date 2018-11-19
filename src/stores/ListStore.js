@@ -159,25 +159,6 @@ export default class ListStore {
     }
   });
 
-
-  /**
-   * 
-   * @param {string} mode The type of model for the list to retrieve
-   * @memberof ListStore
-   */
-  constructor(mode) {
-    if(!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
-
-    this.mode = mode;
-
-    // Fetch items and set them to `items`
-    this.fetchItems()
-      .then(value => {
-        this.items = value;
-      })
-      .catch(err => { this.triggerError(`Error while fetching items ${err}`)});
-  }
-
   /** 
    * An object describing what the header for each field should be with the keys provided respectively for each field
    * @returns {{fieldName: string}}
