@@ -15,8 +15,9 @@ import {
 }               from 'mobx';
 import axios    from 'axios';
 import _includes from 'lodash/includes';
-import _filter   from 'lodash/filter';
-import _reduce   from 'lodash/reduce';
+import _filter from 'lodash/filter';
+import _findIndex from 'lodash/findIndex';
+import _reduce from 'lodash/reduce';
 import api from '../config/api';
 
 /**
@@ -405,6 +406,9 @@ export default class ListStore {
       if(!itemId) reject('Error Updating Item: itemId was undefined or null');
       if(!fieldName) reject('Error Updating Item: fieldName was undefined or null');
       if(!newValue) resolve('Acceptable but item not updated - New Value is null or undefined');
+
+      const updatedItemIndex = _findIndex(this.items, {_id: itemId})
+      this.items[updatedItemIndex][fieldName] = newValue;
 
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
