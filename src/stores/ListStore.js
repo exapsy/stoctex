@@ -11,9 +11,9 @@ import {
   computed, 
   action, 
   observable,
-  reaction,
-}               from 'mobx';
-import axios    from 'axios';
+  reaction
+} from 'mobx';
+import axios from 'axios';
 import _includes from 'lodash/includes';
 import _filter from 'lodash/filter';
 import _findIndex from 'lodash/findIndex';
