@@ -59,6 +59,6 @@ export default class Search extends Component {
           onChange={this.handleSearchChange}
           />
       </form>
-    )
+    );
   }
 }
