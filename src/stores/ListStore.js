@@ -406,7 +406,6 @@ export default class ListStore {
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
       setTimeout(() => {
-        console.log('kik');
         axios({
             method: 'put',
             url,
@@ -420,7 +419,7 @@ export default class ListStore {
             action('updateItemDb.failure'),
             err => reject(err)
           );
-      }, 1000);
+      }, 100);
     });
   }
 
