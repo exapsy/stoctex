@@ -7,9 +7,9 @@
  */
 
 // Dependencies
-import { 
-  computed, 
-  action, 
+import {
+  computed,
+  action,
   observable,
   reaction
 } from 'mobx';
@@ -30,7 +30,7 @@ export default class ListStore {
    * @memberof ListStore
    */
   constructor(mode) {
-    if(!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
+    if (!_includes(ListStore.modes, mode)) this.triggerError('Selected Mode does not exist');
 
     this.mode = mode;
 
@@ -39,7 +39,9 @@ export default class ListStore {
       .then(value => {
         this.items = value;
       })
-      .catch(err => { this.triggerError(`Error while fetching items ${err}`)});
+      .catch(err => {
+        this.triggerError(`Error while fetching items ${err}`)
+      });
   }
 
   /**
@@ -51,7 +53,7 @@ export default class ListStore {
 
   /** All the items to be fetched to the list, unfiltered */
   @observable items = [];
-  
+
   /** The current page of the filtered items */
   @observable currentPage = 1;
 
@@ -66,18 +68,20 @@ export default class ListStore {
 
   /** Error Catch for ErrorBoundary parent component */
   @observable errorBoundary = {
-    hasError : false,
-    error    : null
+    hasError: false,
+    error: null
   };
   errorReaction = reaction(
     () => this.errorBoundary,
-    (hasError, error) => { if(hasError) throw new Error(error); }
+    (hasError, error) => {
+      if (hasError) throw new Error(error);
+    }
   );
 
   /** Enumerable for 'mode' variable, describes the type of 'items' provided by the database */
   static modes = Object.freeze({
-    PRODUCTS:  'products',
-    COURIERS:  'couriers',
+    PRODUCTS: 'products',
+    COURIERS: 'couriers',
     CUSTOMERS: 'customers'
   });
 
@@ -85,15 +89,15 @@ export default class ListStore {
   @observable.ref _modeFields = Object.freeze({
     products: {
       headers: {
-        code1:   'Code1', 
-        code2:   'Code2', 
+        code1: 'Code1',
+        code2: 'Code2',
         barcode: 'Barcode',
-        name:    'Name',
-        gs:      'ΑΠ1',
-        corfu:   'KE1',
-        cclit:   'CC',
-        gp_k:    'MA1',
-        total:   'Total'
+        name: 'Name',
+        gs: 'ΑΠ1',
+        corfu: 'KE1',
+        cclit: 'CC',
+        gp_k: 'MA1',
+        total: 'Total'
       },
       functions: {
         total: (item) => this.sum([item.gs, item.corfu, item.cclit, item.gp_k])
@@ -101,42 +105,42 @@ export default class ListStore {
       totalColumns: 9,
       columnsWidth: [3, 3, 4, 7, 3, 3, 3, 3, 3],
       dataTypes: {
-        code1:   'string', 
-        code2:   'string', 
+        code1: 'string',
+        code2: 'string',
         barcode: 'string',
-        name:    'string',
-        gs:      'number',
-        corfu:   'number',
-        cclit:   'number',
-        gp_k:    'number',
-        total:   'number'
+        name: 'string',
+        gs: 'number',
+        corfu: 'number',
+        cclit: 'number',
+        gp_k: 'number',
+        total: 'number'
       },
       requiredFields: {
-        code1:   true,
-        code2:   false,
+        code1: true,
+        code2: false,
         barcode: false,
-        name:    true,
-        gs:      true,
-        corfu:   true,
-        cclit:   true,
-        gp_k:    true
+        name: true,
+        gs: true,
+        corfu: true,
+        cclit: true,
+        gp_k: true
       },
       modifiableFields: {
-        code1:   true,
-        code2:   true,
+        code1: true,
+        code2: true,
         barcode: true,
-        name:    true,
-        gs:      true,
-        corfu:   true,
-        cclit:   true,
-        gp_k:    true
+        name: true,
+        gs: true,
+        corfu: true,
+        cclit: true,
+        gp_k: true
       },
       api: api.v1.http.products
     },
     customers: {
       headers: {
-        id: 'ID', 
-        name: 'Full Name', 
+        id: 'ID',
+        name: 'Full Name',
         favouriteCourier: 'Favourite Courier',
         vat: 'VAT',
         doy: 'ΔΟΥ',
@@ -151,8 +155,8 @@ export default class ListStore {
     },
     couriers: {
       headers: {
-        name: 'Couriers', 
-        email: 'Email', 
+        name: 'Couriers',
+        email: 'Email',
         phone: 'Phone'
       },
       api: api.v1.http.couriers
@@ -165,18 +169,18 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get headers() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].headers;
   }
-  
+
   /** 
    * A Table shall have a total amount of columns, usually depending on the amount of headers
    * @returns {number} Amount of columns
    * @memberof ListStore
    */
   @computed get totalColumns() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
 
     return this._modeFields[this.mode].totalColumns;
   }
@@ -187,8 +191,8 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get columnsWidth() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
-    
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].columnsWidth;
   }
 
@@ -198,8 +202,8 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get functions() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
-    
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].functions;
   }
 
@@ -208,8 +212,8 @@ export default class ListStore {
    * @returns {{fieldName: type}}
    */
   @computed get dataTypes() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
-    
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].dataTypes;
   }
 
@@ -219,8 +223,8 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get requiredFields() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
-    
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].requiredFields;
   }
 
@@ -231,8 +235,8 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get modifiableFields() {
-    if(!this.mode) this.triggerError('List mode was not defined during item fetching');
-    
+    if (!this.mode) this.triggerError('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].modifiableFields;
   }
 
@@ -242,8 +246,8 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get api() {
-    if(!this.mode) console.log('List mode was not defined during item fetching');
-    
+    if (!this.mode) console.log('List mode was not defined during item fetching');
+
     return this._modeFields[this.mode].api;
   }
 
@@ -277,7 +281,9 @@ export default class ListStore {
       // API URL to make `post` request to
       const url = this.api;
 
-      axios.get(url, { withCredentials: true })
+      axios.get(url, {
+          withCredentials: true
+        })
         .then(
           action("fetchItems.success", (res) => {
             resolve(res.data);
@@ -296,34 +302,37 @@ export default class ListStore {
    */
   @action.bound
   addItemDb(item) {
-        
+
     return new Promise((resolve, reject) => {
 
-      if(!item) reject('Item parameter was undefined');
+      if (!item) reject('Item parameter was undefined');
 
       const url = this.api;
 
       axios.post(
-        url, 
-        item, 
-        {withCredentials: true}
-      )
+          url,
+          url,
+          url,
+          item, {
+            withCredentials: true
+          }
+        )
         .then(
           action('addItemDb.success', (res) => {
             this.fetchItems()
               .then(
-                action('addItemDb.fetchItems.success', 
-                (fetchedItems) => {
-                  this.items = fetchedItems;
-                  resolve(fetchedItems);
-              }))
+                action('addItemDb.fetchItems.success',
+                  (fetchedItems) => {
+                    this.items = fetchedItems;
+                    resolve(fetchedItems);
+                  }))
               .catch(
-                action('addItemDb.fetchItems.success', 
-                (err) => reject(err)));
-            }))
+                action('addItemDb.fetchItems.success',
+                  (err) => reject(err)));
+          }))
         .catch(
-          action('addItemDb.failure', 
-          (err) => reject(err))
+          action('addItemDb.failure',
+            (err) => reject(err))
         );
     });
   }
@@ -338,34 +347,35 @@ export default class ListStore {
    */
   @action.bound
   removeItemDb(itemId) {
-    
+
     return new Promise((resolve, reject) => {
 
-      if(!itemId) reject(`Object's ID wasn't given, unable to remove item`);
+      if (!itemId) reject(`Object's ID wasn't given, unable to remove item`);
 
       const url = `${this.api}/${itemId}`;
 
       axios.delete(
-        url,
-        {withCredentials: true}
-      )
+          url, {
+            withCredentials: true
+          }
+        )
         .then(value => {
           this.fetchItems()
-              .then(
-                action('removeItemDb.fetchItems.success', 
+            .then(
+              action('removeItemDb.fetchItems.success',
                 (fetchedItems) => {
                   this.items = fetchedItems;
                   resolve(fetchedItems);
-              }))
+                }))
             .catch(
               action('removeItemDb.fetchItems.failure',
-              err => reject(err)
-            ));
+                err => reject(err)
+              ));
         })
         .catch(
           action('removeItemDb.failure',
-          err => reject(err)
-        ));
+            err => reject(err)
+          ));
     });
   }
 
@@ -384,29 +394,33 @@ export default class ListStore {
 
     return new Promise((resolve, reject) => {
 
-      if(!itemId) reject('Error Updating Item: itemId was undefined or null');
-      if(!fieldName) reject('Error Updating Item: fieldName was undefined or null');
-      if(!newValue) resolve('Acceptable but item not updated - New Value is null or undefined');
+      if (!itemId) reject('Error Updating Item: itemId was undefined or null');
+      if (!fieldName) reject('Error Updating Item: fieldName was undefined or null');
+      if (!newValue) resolve('Acceptable but item not updated - New Value is null or undefined');
 
-      const updatedItemIndex = _findIndex(this.items, {_id: itemId})
+      const updatedItemIndex = _findIndex(this.items, {
+        _id: itemId
+      })
       this.items[updatedItemIndex][fieldName] = newValue;
 
       const url = `${this.api}/${itemId}?${fieldName.toLowerCase()}=${newValue}`;
 
-      axios(
-        {
-          method: 'put',
-          url, 
-          withCredentials: true
-        })
-        .then(
-          action('updateItemDb.success'),
-          (value) => resolve(value)
-        )
-        .catch(
-          action('updateItemDb.failure'),
-          err => reject(err)
-        );
+      setTimeout(() => {
+        console.log('kik');
+        axios({
+            method: 'put',
+            url,
+            withCredentials: true
+          })
+          .then(
+            action('updateItemDb.success'),
+            (value) => resolve(value)
+          )
+          .catch(
+            action('updateItemDb.failure'),
+            err => reject(err)
+          );
+      }, 1000);
     });
   }
 
@@ -425,16 +439,16 @@ export default class ListStore {
    * @memberof ListStore
    */
   @computed get filteredPagedItems() {
-    
+
     // Slicing filtered items to match the current page
-    const sliceStart = (this.currentPage-1)* this.itemsPerPage
-    const sliceEnd   = (this.currentPage-1) * this.itemsPerPage + this.itemsPerPage;
+    const sliceStart = (this.currentPage - 1) * this.itemsPerPage
+    const sliceEnd = (this.currentPage - 1) * this.itemsPerPage + this.itemsPerPage;
 
     return _filter(this.items, this.itemFilterCallback).slice(sliceStart, sliceEnd);
   }
 
   @computed get totalPages() {
-    const totalPages = Math.floor(this.filteredItems.length / this.itemsPerPage)+1;
+    const totalPages = Math.floor(this.filteredItems.length / this.itemsPerPage) + 1;
     return Number(totalPages);
   }
 
@@ -445,7 +459,7 @@ export default class ListStore {
    */
   @action setPage(page) {
     // if(!Number(page)) return;
-    if(page >= 1 && page <= this.totalPages) {
+    if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
     }
   }
