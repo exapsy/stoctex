@@ -5,7 +5,7 @@
  * 
  */
 
-let base = process.env.REACT_APP_API_URI || 'http://localhost:'+process.env.PORT || 8002;
+let base = process.env.REACT_APP_API_URI || 'http://localhost:'+process.env.PORT || 8001;
 
 export default {
   'v1': {
